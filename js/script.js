@@ -48,3 +48,7 @@ function formInputListener(form) {
         }
     }
 }
+
+document.querySelector('.nav-toggle').onclick = () => {
+    document.querySelector('.header nav').classList.toggle('show');
+}

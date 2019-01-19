@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Dashboard - Politico</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="./../css/style.css" />
+</head>
+
+<body>
+    <header>
+        <div class="header container">
+            <div>
+                <a href="#">
+                    <img class="logo" src="./../images/logo.png" alt="Politico Logo">
+                </a>
+            </div>
+            <span class="nav-toggle">
+                <img src="./../images/nav-toggle.svg" alt="">
+            </span>
+            <nav>
+                <ul>
+                    <li>
+                        <a class="nav-link active" href="#">Dashboard</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">Parties</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">Offices</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="#">Users</a>
+                    </li>
+                    <li class="nav-dropdown">
+                        <a class="nav-link" href="#">
+                            <img class="user-icon" src="./../images/user.svg" alt="">
+                            My Account
+                        </a>
+                        <ul>
+                            <li>
+                                <a class="nav-link" href="">Profile</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Admin Dashboard</h1>
+            <div class="d-flex">
+                <div class="card dash-items">
+                    <div class="col-2 item-pp">
+                        <h2>Political Parties</h2>
+                        <p class="count">40</p>
+                        <a href="./parties.html">Manage</a>
+                    </div>
+                    <div class="col-2 item-po">
+                        <h2>Political Offices</h2>
+                        <p class="count">40</p>
+                        <a href="./offices.html">Manage</a>
+                    </div>
+                    <div class="col-2 item-us">
+                        <h2>Users</h2>
+                        <p class="count">40</p>
+                        <a href="./users.html">Manage</a>
+                    </div>
+                    <div class="col-2">
+                        <h2>Petitions</h2>
+                        <p class="count">40</p>
+                        <a href="./petitions.html">Manage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="text-center">
+            <span>&copy; <script>document.write((new Date).getFullYear())</script> Politico</span>
+        </div>
+    </footer>
+
+    <script src="./../js/script.js"></script>
+</body>
+
+</html>

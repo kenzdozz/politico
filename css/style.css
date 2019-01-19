@@ -10,12 +10,18 @@ body {
     margin: 0;
     font-family: 'Ubuntu', sans-serif;
 }
-#registerPage {
+#registerPage, #loginPage {
     background-color: var(--lightPrimaryColor);
     padding: 20px 0;
 }
-#registerPage header{
+#registerPage header, #loginPage header{
     text-align: center;
+}
+#loginPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
 }
 .logo {
     height: 60px;

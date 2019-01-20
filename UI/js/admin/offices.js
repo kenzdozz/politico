@@ -7,6 +7,13 @@ const deleteModal = (partyId) => {
     triggerModal('dialogModal');
 }
 
+$('.toggle-modal', true).forEach(item => {
+    item.addEventListener('click', function () {
+        triggerModal(this.dataset.modal)
+        $('#' + this.dataset.modal).querySelector('.modal-title').innerHTML = 'Create an Office';
+    })
+});
+
 document.addEventListener("DOMContentLoaded", function(event) {
     const offices = [
         {

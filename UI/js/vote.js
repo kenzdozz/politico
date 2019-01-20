@@ -9,5 +9,10 @@ window.onscroll = function () {
         goTo.classList.remove('fix');
         goTo.previousElementSibling.classList.remove('mb-52');
     }
-    console.log(distanceTop, window.pageYOffset)
 }
+
+$('.toggle-modal', true).forEach(item => {
+    item.addEventListener('click', function () {
+        triggerModal(this.dataset.modal);
+    })
+});

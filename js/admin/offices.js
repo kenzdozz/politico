@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let editBtn = createElement('a', {
             href: 'javascript:;',
             innerHTML: 'Edit',
-            class: ['btn', 'btn-edit']
+            class: ['btn', 'btn-green', 'btn-sm']
         });
         editBtn.onclick = function () {
             editModal(9)
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         let deleteBtn = createElement('a', {
             href: 'javascript:;',
             innerHTML: 'Delete',
-            class: ['btn', 'btn-delete']
+            class: ['btn', 'btn-red', 'btn-sm']
         });
         deleteBtn.onclick = function () {
             deleteModal(9)

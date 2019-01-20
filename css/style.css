@@ -140,6 +140,12 @@ nav ul li{
     margin: 2rem;
 }
 
+.w-100 {
+    width: 100%;
+}
+.pr-3 {
+    padding-right: 1rem;
+}
 .pb-3 {
     padding-bottom: 1rem;
 }
@@ -260,20 +266,19 @@ button:hover {
     opacity: 0.8;
 }
 .btn {
-    padding: .1rem .75rem;
+    padding: .35rem .85rem;
     text-decoration: none;
     display: inline-block;
     margin: auto 5px;
 }
-.btn-edit {
+.btn-sm {
     font-size: 0.85rem;
-    color: #ffffff;
-    background-color: #235f18;
+    padding: .1rem .75rem;
 }
-.btn-delete {
-    font-size: 0.85rem;
+.btn-red {
     color: #000000;
     background-color: #ff0000;
+    border: 1px solid #ff0000;
 }
 .btn-green {
     background-color: var(--primaryColor);

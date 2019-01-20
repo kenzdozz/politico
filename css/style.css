@@ -229,7 +229,7 @@ tr:nth-child(even) td {
 .input-group label {
     margin-right: 7px;
 }
-.input-group input:not([type='checkbox']) {
+.input-group input:not([type='checkbox']), select {
     flex-grow: 1 !important;
 }
 .input-group .upload-image img {
@@ -365,6 +365,7 @@ span.help {
     position: absolute;
     top: 0;
     max-width: 500px;
+    min-width: 35vw;
     padding: 25px;
     margin: 40px auto;
     background-color: #ffffff;

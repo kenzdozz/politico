@@ -1,5 +1,42 @@
 
-function validateInput(form, rules) {
+const $ = (selector, all = false) => {
+    if (all) return document.querySelectorAll(selector);
+    return document.querySelector(selector);
+};
+
+const createElement = (type, attributes) => {
+    var element = document.createElement(type);
+    for (var key in attributes) {
+        if (key == "class") {
+            element.classList.add(...attributes[key]);
+        } else if (key == 'innerHTML') {
+            element[key] = attributes[key];
+        } else {
+            element.setAttribute(key, attributes[key]);
+        }
+    }
+    return element;
+}
+
+const triggerModal = modalId => {
+    const modal = $('#' + modalId);
+    modal.classList.add('show');
+    modal.querySelector('.modal-content').classList.add('slide-in');
+    setTimeout(() => {
+        modal.querySelector('.modal-content').classList.remove('slide-in');
+    }, 100);
+}
+
+const formInputListener = form => {
+    for (let element of form.elements) {
+        element.oninput = function (event) {
+            let errorSpan = element.closest('.input-group').querySelector('.form-error')
+            if (errorSpan) errorSpan.innerHTML = '';
+        }
+    }
+}
+
+const validateInput = (form, rules) => {
     for (let rule of rules) {
         let isValid = false;
         switch (rule.rule) {
@@ -40,15 +77,31 @@ function validateInput(form, rules) {
     return true
 }
 
-function formInputListener(form) {
-    for (let element of form.elements) {
-        element.oninput = function (event) {
-            let errorSpan = element.closest('.input-group').querySelector('.form-error')
-            if (errorSpan) errorSpan.innerHTML = '';
-        }
-    }
-}
+$('.toggle-modal', true).forEach(item => {
+    item.addEventListener('click', function () {
+        triggerModal(this.dataset.modal)
+        $('#'+this.dataset.modal).querySelector('.modal-title').innerHTML = 'Create a Party';
+    })
+})
 
-document.querySelector('.nav-toggle').onclick = () => {
-    document.querySelector('.header nav').classList.toggle('show');
+$('.modal-close', true).forEach(item => {
+    item.addEventListener('click', () => {
+        $('.modal', true).forEach(modal => modal.classList.remove('show'));
+    })
+})
+
+$('.modal', true).forEach(modal => modal.onclick = () => {
+    if (modal.id == 'dialogModal') return modal.classList.remove('show');
+    modal.querySelector('.modal-content').classList.add('shake');
+    setTimeout(() => {
+        modal.querySelector('.modal-content').classList.remove('shake');
+    }, 300)
+})
+
+$('.modal-content', true).forEach(mContent => mContent.onclick = function (e) {
+    e.stopPropagation();
+})
+
+$('.nav-toggle').onclick = () => {
+    $('.header nav').classList.toggle('show');
 }

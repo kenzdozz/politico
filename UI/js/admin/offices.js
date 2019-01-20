@@ -1,51 +1,42 @@
 
 const editModal = (partyId) => {
-    triggerModal('manageParty');
-    $('#manageParty').querySelector('.modal-title').innerHTML = 'Edit a Party';
+    triggerModal('manageOffice');
+    $('#manageOffice').querySelector('.modal-title').innerHTML = 'Edit an office';
 }
 const deleteModal = (partyId) => {
     triggerModal('dialogModal');
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
-    const parties = [
+    const offices = [
         {
-            name: "People Democratic Party",
-            address: "Aso Rock, Abuja",
+            name: "Preseident",
+            type: "federal",
         },
         {
-            name: "People Democratic Party",
-            address: "Aso Rock, Abuja",
+            name: "Preseident",
+            type: "federal",
         },
         {
-            name: "People Democratic Party",
-            address: "Aso Rock, Abuja",
+            name: "Preseident",
+            type: "federal",
         },
         {
-            name: "People Democratic Party",
-            address: "Aso Rock, Abuja",
+            name: "Preseident",
+            type: "federal",
         },
         {
-            name: "People Democratic Party",
-            address: "Aso Rock, Abuja",
-        },
-        {
-            name: "People Democratic Party",
-            address: "Aso Rock, Abuja",
-        },
-        {
-            name: "People Democratic Party",
-            address: "Aso Rock, Abuja",
+            name: "Preseident",
+            type: "federal",
         }
     ]
     
     const table = $('table tbody');
-    parties.forEach(party => {
+    offices.forEach(office => {
         let row = document.createElement('tr');
-        row.append(document.createElement('td'))
-        for (let prop in party) {
+        for (let prop in office) {
             let data = document.createElement('td');
-            data.innerHTML = party[prop];
+            data.innerHTML = office[prop];
             row.append(data)
         }
         let editBtn = createElement('a', {

@@ -77,13 +77,6 @@ const validateInput = (form, rules) => {
     return true
 }
 
-$('.toggle-modal', true).forEach(item => {
-    item.addEventListener('click', function () {
-        triggerModal(this.dataset.modal)
-        $('#' + this.dataset.modal).querySelector('.modal-title').innerHTML = 'Create a Party';
-    })
-})
-
 $('.modal-close', true).forEach(item => {
     item.addEventListener('click', () => {
         $('.modal', true).forEach(modal => modal.classList.remove('show'));

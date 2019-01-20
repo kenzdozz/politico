@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Create Account - Politico</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/style.css" />
+</head>
+
+<body id="registerPage">
+    <header>
+        <a href="#">
+            <img class="logo" src="./images/logo.png" alt="Logo">
+        </a>
+    </header>
+    <main id="main" class="auth-wrapper">
+        <div class="auth-container">
+            <h1 class="title">Create Account</h1>
+            <form id="registerForm" action="">
+                <div class="input-group">
+                    <label for="first_name">First name:</label>
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="John"
+                        required>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label for="last_name">Last name:</label>
+                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Doe" required>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label for="voter_id">NIN <span class="help" title="National Identification Number">?</span>:
+                    </label>
+                    <input type="text" class="form-control" name="voter_id" id="voter_id" placeholder="12345" required>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="john.doe@xyz.com"
+                        required>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="********"
+                        required>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" class="form-control" name="confirm_password" id="confirm-password"
+                        placeholder="********" required>
+                </div>
+                <div class="input-group">
+                    <fieldset>
+                        <legend>Gender</legend>
+                        <input id="male" type="radio" name="gender" value="Male" required>
+                        <label for="male">Male</label>
+                        <input id="female" type="radio" name="gender" value="Female" required>
+                        <label for="female">Female</label>
+                        <span class="form-error"></span>
+                    </fieldset>
+                </div>
+                <div class="input-group">
+                    <input type="checkbox" name="terms" id="terms" required>
+                    <label for="terms">Accept <a href="#">terms and condition</a>?</label>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <button class="btn-green" type="submit">Register</button>
+                </div>
+                <p class="text-right">Already have an account? <a href="#">Login</a></p>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <p class="text-center">&copy; <script>document.write((new Date).getFullYear())</script> Politico</p>
+    </footer>
+    <script src="./js/script.js"></script>
+    <script src="./js/register.js"></script>
+</body>
+
+</html>

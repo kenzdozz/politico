@@ -43,6 +43,9 @@ nav {
 nav ul {
     padding: 0;
     margin: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
 }
 nav ul li{
     display: inline-block;
@@ -149,6 +152,9 @@ nav ul li{
 .pb-3 {
     padding-bottom: 1rem;
 }
+.mb-52 {
+    margin-bottom: 52px;
+}
 .table-responsive {
     overflow: auto;
 }
@@ -197,7 +203,8 @@ tr:nth-child(even) td {
     min-height: 100vh;
 }
 .logo {
-    height: 60px;
+    width: 185px;
+    max-width: 100%;
 }
 .auth-wrapper{
     display: flex;
@@ -270,6 +277,9 @@ button:hover {
     text-decoration: none;
     display: inline-block;
     margin: auto 5px;
+}
+.btn-outline {
+    border: 1px solid;
 }
 .btn-sm {
     font-size: 0.85rem;
@@ -401,9 +411,89 @@ span.modal-close {
 }
 
 
+.politician {
+    position: relative;
+    flex-basis: 25%;
+    min-width: 200px;
+}
+.politician .card:hover {
+    box-shadow: 1px 1px 25px 3px #cccccc;
+}
+.politician .card{
+    border: 1px solid #abc1a5;
+    margin: 1rem;
+    transition: box-shadow .1s linear;
+}
+.politician .party-logo {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    right: 1rem;
+}
+.politician .user-img {
+    width: 100%;
+    display: block;
+    margin: auto;
+}
+.politician .details {
+    background-color: white;
+    padding: .35rem .85rem;
+    text-align: center;
+}
+.politician .name {
+    margin: .5rem 0 .2rem;
+    padding-bottom: .2rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #93cc84;
+}
+.politician .office {
+    margin: 0;
+    font-size: .9rem;
+}
+.politician .btn:hover {
+    background-color: #3f840f;
+    color: #ffffff;
+}
+.politician .btn {
+    border: 1px solid #3f840f;
+    margin: 1rem 0;
+    font-weight: 500;
+    color: #3f840f;
+    transition: background-color .5s linear;
+}
+.goto.fix {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+    border-bottom: 1px solid;
+    width: 100%;
+    padding: 10px 35px;
+}
+.goto a {
+    color: #444444;
+    text-transform: capitalize;
+}
+.pol-office {
+    text-transform: capitalize;
+}
+
+
+
+@media only screen and (max-width: 842px) {
+    .politician {
+        flex-basis: 33.33%;
+    }
+}
 @media only screen and (max-width: 767px) {
     .header nav {
         flex: 0 0 100%;
+    }
+}
+@media only screen and (max-width: 630px) {
+    .politician {
+        flex-basis: 50%;
     }
 }
 @media only screen and (max-width: 540px) {
@@ -429,6 +519,11 @@ span.modal-close {
         display: inline-block;
     }
     .col-1, .col-2, .col-3{
+        flex-basis: 100%;
+    }
+}
+@media only screen and (max-width: 425px) {
+    .politician {
         flex-basis: 100%;
     }
 }

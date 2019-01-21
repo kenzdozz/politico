@@ -80,7 +80,7 @@ const validateInput = (form, rules) => {
 $('.toggle-modal', true).forEach(item => {
     item.addEventListener('click', function () {
         triggerModal(this.dataset.modal)
-        $('#'+this.dataset.modal).querySelector('.modal-title').innerHTML = 'Create a Party';
+        $('#' + this.dataset.modal).querySelector('.modal-title').innerHTML = 'Create a Party';
     })
 })
 
@@ -105,3 +105,12 @@ $('.modal-content', true).forEach(mContent => mContent.onclick = function (e) {
 $('.nav-toggle').onclick = () => {
     $('.header nav').classList.toggle('show');
 }
+
+$('a[href^="#"]', true).forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+        const targetElem = $(anchor.getAttribute('href'));
+        if (!targetElem) return;
+        targetElem.scrollIntoView({ behavior: "smooth", block: "center" });
+        e.preventDefault();
+    })
+})

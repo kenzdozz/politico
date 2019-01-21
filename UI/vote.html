@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin Dashboard - Politico</title>
+    <title>Vote Politicians - Politico</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="./css/style.css" />
 </head>
@@ -23,10 +23,10 @@
             <nav>
                 <ul>
                     <li>
-                        <a class="nav-link active" href="#">Vote</a>
+                        <a class="nav-link active" href="./vote.html">Vote</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="#">Parties</a>
+                        <a class="nav-link" href="./parties.html">Parties</a>
                     </li>
                     <li class="nav-dropdown">
                         <a class="nav-link" href="#">
@@ -34,6 +34,10 @@
                             My Account
                         </a>
                         <ul>
+                            <li>
+                                <a class="toggle-modal nav-link" data-modal="expressInterest" href="javascript:;">Express
+                                    Interest</a>
+                            </li>
                             <li>
                                 <a class="nav-link" href="">Profile</a>
                             </li>
@@ -190,6 +194,37 @@
             <span>&copy; <span id="copyYear">2019</span> Politico</span>
         </div>
     </footer>
+
+    <div id="expressInterest" class="modal">
+        <span class="modal-close">Close</span>
+        <div class="modal-content">
+            <form action="">
+                <h2 class="modal-title">Vie for an Office</h2>
+                <div class="input-group">
+                    <label for="party">Party:</label>
+                    <select class="form-control" name="party" id="party">
+                        <option value="">Choose one...</option>
+                        <option value="federal">PDP</option>
+                        <option value="legislative">APC</option>
+                    </select>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label for="office">Office:</label>
+                    <select class="form-control" name="office" id="office">
+                        <option value="">Choose one...</option>
+                        <option value="federal">President</option>
+                        <option value="legislative">Governor</option>
+                    </select>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <button type="submit">Submit</button>
+                    <button type="button" class="modal-close ml-auto">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="./js/script.js"></script>
     <script src="./js/vote.js"></script>

@@ -71,13 +71,16 @@ nav ul li{
     vertical-align: middle;
 }
 .nav-dropdown ul li {
+    white-space: nowrap;
     display: block;
     list-style: none;
     padding: 0;
 }
 .nav-dropdown ul {
     display: none;
-    width: 100%;
+    min-width: 100%;
+    width: auto;
+    right: 0;
     background-color: #ced4cc;
 }
 .nav-dropdown:hover ul{
@@ -439,6 +442,9 @@ span.modal-close {
     background-color: white;
     padding: .35rem .85rem;
     text-align: center;
+}
+.party .details {
+    padding-bottom: 1.5rem;
 }
 .politician .name {
     margin: .5rem 0 .2rem;

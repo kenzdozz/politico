@@ -1,0 +1,33 @@
+{
+  "name": "politico",
+  "version": "1.0.0",
+  "description": "Politico enables citizens give their mandate to politicians running for different government offices while building trust in the process through transparency.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenzdozz/politico.git"
+  },
+  "keywords": [
+    "vote",
+    "election",
+    "party",
+    "politics"
+  ],
+  "author": "KenzDozz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kenzdozz/politico/issues"
+  },
+  "homepage": "https://github.com/kenzdozz/politico#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0"
+  }
+}

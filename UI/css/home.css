@@ -1,0 +1,71 @@
+
+body {
+    background: url('./../images/ng-bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    color: #ffffff;
+}
+
+header {
+    box-shadow: unset;
+    text-align: center;
+}
+
+main {
+    min-height: calc(100vh - 64px);
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color: white;
+    background-color: #00000099;
+}
+
+@keyframes rollIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%) rotate(-120deg);
+    }
+
+    20%, 80% {
+        opacity: 1;
+        transform: translateX(0px) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%) rotate(120deg);
+    }
+}
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+
+    20%, 80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.slide {
+    display: none;
+}
+
+.slide img {
+    width: 300px;
+    max-width: 100%;
+}
+.slide.show {
+    display: block;
+}
+.slide.show img{
+    animation: rollIn 2.5s linear;
+}
+.slide.show h2{
+    animation: fadeInOut 2.5s linear;
+}

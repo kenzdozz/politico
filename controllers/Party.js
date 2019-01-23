@@ -26,6 +26,13 @@ const PartyController = {
       ],
     });
   },
+
+  getAll: (req, res) => {
+    const parties = Party.findAll();
+    return new Response(res, codes.success, {
+      data: parties,
+    });
+  },
 };
 
 export default PartyController;

@@ -21,6 +21,10 @@ class Party {
     const key = checkValue ? checkKey : 'id';
     return !!this.parties.find(party => party[key] === value);
   }
+
+  findAll() {
+    return this.parties;
+  }
 }
 
 export default new Party();

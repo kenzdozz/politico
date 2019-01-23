@@ -30,5 +30,6 @@ const rules = [
 
 partyRoutes.route('/').post(validateInputs(rules), PartyController.create);
 partyRoutes.route('/').get(PartyController.getAll);
+partyRoutes.route('/:id').get(PartyController.getOne);
 
 export default partyRoutes;

@@ -33,6 +33,18 @@ const PartyController = {
       data: parties,
     });
   },
+
+  getOne: (req, res) => {
+    const party = Party.findOne(parseInt(req.params.id, 10));
+    if (!party) {
+      return new Response(res, codes.notFound, {
+        error: 'Party not found.',
+      });
+    }
+    return new Response(res, codes.success, {
+      data: [party],
+    });
+  },
 };
 
 export default PartyController;

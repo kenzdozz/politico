@@ -45,6 +45,19 @@ const PartyController = {
       data: [party],
     });
   },
+
+  editOne: async (req, res) => {
+    const { name, hqAddress, logo } = req.body;
+    const party = await Party.update(parseInt(req.params.id, 10), { name, hqAddress, logo });
+    if (!party) {
+      return new Response(res, codes.notFound, {
+        error: 'Party not found.',
+      });
+    }
+    return new Response(res, codes.success, {
+      data: [party],
+    });
+  },
 };
 
 export default PartyController;

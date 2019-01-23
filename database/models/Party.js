@@ -29,6 +29,17 @@ class Party {
   findOne(id) {
     return this.parties.find(party => party.id === id);
   }
+
+  async update(id, data) {
+    const party = this.findOne(id);
+    if (!party) return null;
+    const index = this.parties.indexOf(party);
+    await Object.keys(data).forEach((key) => {
+      if (data[key]) this.parties[index][key] = data[key];
+    });
+    this.parties[index].modifiedAt = new Date();
+    return this.parties[index];
+  }
 }
 
 export default new Party();

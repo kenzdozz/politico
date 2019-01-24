@@ -1,1 +1,11 @@
+#Node modules
 node_modules/
+
+# Build directory
+build/
+
+# Coverage directory
+coverage
+
+# nyc test coverage
+.nyc_output

@@ -1,6 +1,6 @@
 import express from 'express';
-import Party from '../controllers/Party';
 import validateInputs from '../middlewares/validateInputs';
+import PartyController from '../controllers/Party';
 
 const partyRoutes = express.Router();
 
@@ -28,6 +28,7 @@ const rules = [
   },
 ];
 
-partyRoutes.route('/').post(validateInputs(rules), Party.create);
+partyRoutes.route('/').post(validateInputs(rules), PartyController.create);
+partyRoutes.route('/').get(PartyController.getAll);
 
 export default partyRoutes;

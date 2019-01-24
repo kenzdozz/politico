@@ -40,6 +40,15 @@ class Party {
     this.parties[index].modifiedAt = new Date();
     return this.parties[index];
   }
+
+
+  delete(id) {
+    const party = this.findOne(id);
+    if (!party) return null;
+    const index = this.parties.indexOf(party);
+    this.parties.splice(index, 1);
+    return null;
+  }
 }
 
 export default new Party();

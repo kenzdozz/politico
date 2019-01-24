@@ -4,7 +4,7 @@ import codes from '../helpers/statusCode';
 import Party from '../database/models/Party';
 
 const PartyController = {
-  create: async (req, res) => {
+  createParty: async (req, res) => {
     const { name, hqAddress, logo } = req.body;
 
     const logoUrl = base64ImageDecode(logo, 'party', 'png');
@@ -27,14 +27,14 @@ const PartyController = {
     });
   },
 
-  getAll: (req, res) => {
+  getParties: (req, res) => {
     const parties = Party.findAll();
     return new Response(res, codes.success, {
       data: parties,
     });
   },
 
-  getOne: (req, res) => {
+  getParty: (req, res) => {
     const party = Party.findOne(parseInt(req.params.id, 10));
     if (!party) {
       return new Response(res, codes.notFound, {
@@ -46,7 +46,7 @@ const PartyController = {
     });
   },
 
-  editOne: async (req, res) => {
+  editParty: async (req, res) => {
     const { name, hqAddress, logo } = req.body;
     const party = await Party.update(parseInt(req.params.id, 10), { name, hqAddress, logo });
     if (!party) {
@@ -56,6 +56,15 @@ const PartyController = {
     }
     return new Response(res, codes.success, {
       data: [party],
+    });
+  },
+
+  deleteParty: (req, res) => {
+    Party.delete(parseInt(req.params.id, 10));
+    return new Response(res, codes.success, {
+      data: [{
+        message: 'Party deleted successfully.',
+      }],
     });
   },
 };

@@ -28,9 +28,10 @@ const rules = [
   },
 ];
 
-partyRoutes.route('/').post(validateInputs(rules), PartyController.create);
-partyRoutes.route('/').get(PartyController.getAll);
-partyRoutes.route('/:id').get(PartyController.getOne);
-partyRoutes.route('/:id').patch(PartyController.editOne);
+partyRoutes.route('/').post(validateInputs(rules), PartyController.createParty);
+partyRoutes.route('/').get(PartyController.getParties);
+partyRoutes.route('/:id').get(PartyController.getParty);
+partyRoutes.route('/:id').patch(PartyController.editParty);
+partyRoutes.route('/:id').delete(PartyController.deleteParty);
 
 export default partyRoutes;

@@ -21,6 +21,18 @@ const OfficeController = {
       data: offices,
     });
   },
+
+  getOffice: (req, res) => {
+    const office = Office.findOne(parseInt(req.params.id, 10));
+    if (!office) {
+      return new Response(res, codes.notFound, {
+        error: 'Office not found.',
+      });
+    }
+    return new Response(res, codes.success, {
+      data: [office],
+    });
+  },
 };
 
 export default OfficeController;

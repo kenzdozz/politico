@@ -31,6 +31,6 @@ describe('Get a specific political office: GET /offices/<office-id>', () => {
 
     expect(response.status).to.eqls(statusCodes.notFound);
     expect(response.body.status).to.eqls(statusCodes.notFound);
-    expect(response.body.error).eqls('office not found.');
+    expect(response.body.error).eqls('Office not found.');
   });
 });

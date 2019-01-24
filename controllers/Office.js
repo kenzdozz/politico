@@ -14,6 +14,13 @@ const OfficeController = {
       ],
     });
   },
+
+  getOffices: (req, res) => {
+    const offices = Office.findAll();
+    return new Response(res, codes.success, {
+      data: offices,
+    });
+  },
 };
 
 export default OfficeController;

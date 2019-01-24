@@ -24,5 +24,6 @@ const rules = [
 ];
 
 router.route('/').post(validateInputs(rules), OfficeController.createOffice);
+router.route('/').get(OfficeController.getOffices);
 
 export default router;

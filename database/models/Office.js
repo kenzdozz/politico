@@ -21,6 +21,10 @@ class Office {
     const key = checkValue ? checkKey : 'id';
     return !!this.offices.find(office => office[key] === value);
   }
+
+  findAll() {
+    return this.offices;
+  }
 }
 
 export default new Office();

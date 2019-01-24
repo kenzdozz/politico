@@ -38,6 +38,7 @@ describe('Create a political office: POST /offices', () => {
 
     expect(response.status).to.eqls(statusCodes.badRequest);
     expect(response.body.status).to.eqls(statusCodes.badRequest);
-    expect(response.body.error).eqls('Party name is required.');
+    expect(response.body.error).eqls('Validation errors.');
+    expect(response.body.fields[0].name).eqls('Office name is required.');
   });
 });

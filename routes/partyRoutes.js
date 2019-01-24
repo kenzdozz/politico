@@ -2,7 +2,7 @@ import express from 'express';
 import validateInputs from '../middlewares/validateInputs';
 import PartyController from '../controllers/Party';
 
-const partyRoutes = express.Router();
+const router = express.Router();
 
 const rules = [
   {
@@ -28,10 +28,10 @@ const rules = [
   },
 ];
 
-partyRoutes.route('/').post(validateInputs(rules), PartyController.createParty);
-partyRoutes.route('/').get(PartyController.getParties);
-partyRoutes.route('/:id').get(PartyController.getParty);
-partyRoutes.route('/:id').patch(PartyController.editParty);
-partyRoutes.route('/:id').delete(PartyController.deleteParty);
+router.route('/').post(validateInputs(rules), PartyController.createParty);
+router.route('/').get(PartyController.getParties);
+router.route('/:id').get(PartyController.getParty);
+router.route('/:id').patch(PartyController.editParty);
+router.route('/:id').delete(PartyController.deleteParty);
 
-export default partyRoutes;
+export default router;

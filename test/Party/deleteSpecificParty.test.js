@@ -13,13 +13,13 @@ describe('Get all political parties: GET /parties/<party-id>', () => {
     party = await Party.create(parties[0]);
   });
 
-  it('should return a specific party', async () => {
+  it('should delete a specific party', async () => {
     const response = await chai.request(app)
       .delete(`/api/v1/parties/${party.id}`);
 
-    expect(response.status).to.eqls(statusCodes.noContent);
+    expect(response.status).to.eqls(statusCodes.success);
     expect(response.body).to.be.an('object');
-    expect(response.body.status).to.eqls(statusCodes.noContent);
+    expect(response.body.status).to.eqls(statusCodes.success);
     expect(response.body.data.length).to.eqls(1);
     expect(response.body.data[0].message).to.eqls('Party deleted successfully.');
   });

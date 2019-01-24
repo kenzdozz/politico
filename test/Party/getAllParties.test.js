@@ -9,6 +9,7 @@ chai.use(chaiHttp);
 
 describe('Get all political parties: GET /parties', () => {
   before(async () => {
+    Party.parties = [];
     await parties.forEach(async (party) => {
       await Party.create(party);
     });

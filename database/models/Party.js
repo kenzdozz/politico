@@ -25,6 +25,10 @@ class Party {
   findAll() {
     return this.parties;
   }
+
+  findOne(id) {
+    return this.parties.find(party => party.id === id);
+  }
 }
 
 export default new Party();

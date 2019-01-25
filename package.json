@@ -4,7 +4,7 @@
   "description": "Politico enables citizens give their mandate to politicians running for different government offices while building trust in the process through transparency.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run build && nyc --reporter=html --reporter=text npm run build && mocha build/test/ --exit",
+    "test": "nyc --reporter=html --reporter=text npm run build && mocha build/test/ --exit",
     "build": "rimraf build/* && babel ./ -d build --ignore 'node_modules','UI' ",
     "start": "npm run build && node build/app",
     "start:dev": "./node_modules/.bin/babel-watch app.js"

@@ -11,25 +11,23 @@ const validateInputs = rules => async (req, res, next) => {
     let isValid = false;
     const bodyParam = body[rule.name] ? body[rule.name].trim() : '';
     switch (rule.rule) {
-      case 'required':
-        isValid = bodyParam.length;
-        break;
-      case 'email':
-        isValid = /\S+@\S+\.\S+/.test(bodyParam);
-        break;
-      case 'min':
-        isValid = bodyParam <= rule.value;
-        break;
-      case 'max':
-        isValid = bodyParam >= rule.value;
-        break;
-      case 'number':
-        isValid = !Number.isNaN(bodyParam);
-        break;
       case 'unique':
         isValid = !Models[rule.model].exists(rule.name, bodyParam);
         break;
-      default:
+      // case 'email':
+      //   isValid = /\S+@\S+\.\S+/.test(bodyParam);
+      //   break;
+      // case 'min':
+      //   isValid = bodyParam <= rule.value;
+      //   break;
+      // case 'max':
+      //   isValid = bodyParam >= rule.value;
+      //   break;
+      // case 'number':
+      //   isValid = !Number.isNaN(bodyParam);
+      //   break;
+      default: // required
+        isValid = bodyParam.length;
         break;
     }
 

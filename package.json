@@ -2,9 +2,9 @@
   "name": "politico",
   "version": "1.0.0",
   "description": "Politico enables citizens give their mandate to politicians running for different government offices while building trust in the process through transparency.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text npm run build && mocha build/test/ --exit",
+    "test": "nyc --reporter=html --reporter=text mocha --no-deprecation --exit --compilers js:babel-core/register --require babel-polyfill --timeout 6000 || true",
     "build": "rimraf build/* && babel ./ -d build --ignore 'node_modules','UI' ",
     "start": "npm run build && node build/app",
     "start:dev": "./node_modules/.bin/babel-watch app.js"
@@ -28,6 +28,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
+    "babel-plugin-istanbul": "^5.1.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",

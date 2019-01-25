@@ -8,13 +8,14 @@ const lastId = (arr) => {
 
 const base64ImageDecode = (base64Data, folder) => {
   if (!base64Data) return '';
-  let ext = '';
   const index0 = base64Data.charAt(0);
-  if (index0 === 'i') ext = '.png';
-  else if (index0 === '/') ext = '.jpg';
-  else if (index0 === 'R') ext = '.gif';
-  else if (index0 === 'U') ext = '.webp';
-
+  const extenstions = {
+    i: '.png',
+    '/': '.jpg',
+    R: '.gif',
+    U: '.webp',
+  };
+  const ext = extenstions[index0];
   const publicPath = `${__dirname}/../public/`;
   const fileDir = `img/${folder}`;
   const filePath = `${fileDir}/${new Date().getTime()}${ext}`;

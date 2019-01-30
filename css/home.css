@@ -1,27 +1,58 @@
+.header > * {
+    position: relative;
+    z-index: 1;
+}
+.header::after{
+    position: absolute;
+    content: "";
+    background: #00000099;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+}
 
-body {
+.header {
     background: url('./../images/ng-bg.png');
     background-size: cover;
     background-repeat: no-repeat;
-    min-height: 100vh;
-    color: #ffffff;
-}
-
-header {
-    box-shadow: unset;
-    text-align: center;
-}
-
-main {
-    min-height: calc(100vh - 64px);
+    position: relative;
+    min-height: 50vh;
     padding: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     text-align: center;
-    color: white;
-    background-color: #00000099;
+    color: #ffffff;
+}
+.header-text {
+    padding: 60px 0 40px;
+}
+.header-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+}
+.features{
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    padding: 40px 0;
+}
+.features > div {
+    padding: 10px;
+}
+.act .btn:hover {
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.header > a{
+    position: absolute;
+    top: 10px;
+    left: 20px
+}
+.title {
+    margin: 60px 20px 20px;
 }
 
 @keyframes rollIn {
@@ -52,20 +83,8 @@ main {
     }
 }
 
-.slide {
-    display: none;
-}
 
-.slide img {
-    width: 300px;
+.features img {
+    width: 200px;
     max-width: 100%;
-}
-.slide.show {
-    display: block;
-}
-.slide.show img{
-    animation: rollIn 2.5s linear;
-}
-.slide.show h2{
-    animation: fadeInOut 2.5s linear;
 }

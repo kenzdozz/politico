@@ -28,16 +28,16 @@
                     <li>
                         <a class="nav-link" href="./parties.html">Parties</a>
                     </li>
+                    <li>
+                        <a class="toggle-modal nav-link" data-modal="expressInterest" href="javascript:;">Express
+                            Interest</a>
+                    </li>
                     <li class="nav-dropdown">
                         <a class="nav-link" href="#">
                             <img class="user-icon" src="./images/user.svg" alt="">
                             My Account
                         </a>
                         <ul>
-                            <li>
-                                <a class="toggle-modal nav-link" data-modal="expressInterest" href="javascript:;">Express
-                                    Interest</a>
-                            </li>
                             <li>
                                 <a class="nav-link" href="#">Profile</a>
                             </li>
@@ -201,8 +201,8 @@
             <form action="">
                 <h2 class="modal-title">Vie for an Office</h2>
                 <div class="input-group">
-                    <label for="party">Party:</label>
-                    <select class="form-control" name="party" id="party">
+                    <label class="req" for="party">Party:</label>
+                    <select class="form-control" name="party" id="party" required>
                         <option value="">Choose one...</option>
                         <option value="federal">PDP</option>
                         <option value="legislative">APC</option>
@@ -210,12 +210,17 @@
                     <span class="form-error"></span>
                 </div>
                 <div class="input-group">
-                    <label for="office">Office:</label>
-                    <select class="form-control" name="office" id="office">
+                    <label class="req" for="office">Office:</label>
+                    <select class="form-control" name="office" id="office" required>
                         <option value="">Choose one...</option>
                         <option value="federal">President</option>
                         <option value="legislative">Governor</option>
                     </select>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label class="align-base" for="mandate">Mandate:</label>
+                    <textarea rows="10" class="form-control" name="mandate" id="mandate"></textarea>
                     <span class="form-error"></span>
                 </div>
                 <div class="input-group">

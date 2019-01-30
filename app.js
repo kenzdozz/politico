@@ -3,22 +3,28 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import { officeRoutes, partyRoutes } from './routes';
+import codes from './helpers/statusCode';
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => res.status(200).send({ message: 'YAY! Congratulations bro! Your first endpoint is working' }));
+app.get('/', (req, res) => res.status(codes.success).send({
+  status: codes.success,
+  data: [{
+    message: 'The app is running',
+  }],
+}));
 
 app.use('/api/v1/parties', partyRoutes);
 app.use('/api/v1/offices', officeRoutes);
 
-app.listen(3000);
+app.listen(PORT);
 
 // eslint-disable-next-line no-console
-console.log('app running on port ', 3000);
-
+console.log('app running on port ', PORT);
 export default app;

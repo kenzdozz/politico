@@ -486,11 +486,26 @@ span.modal-close {
 .party .details {
     padding-bottom: 1.5rem;
 }
+.politician .details {
+    position: relative;
+}
+.politician .details img {
+    position: absolute;
+    bottom: 15px;
+    height: 60px;
+    right: 20px;
+}
 .politician .name {
     margin: .5rem 0 .2rem;
     padding-bottom: .2rem;
     font-size: 1.2rem;
     border-bottom: 1px solid #93cc84;
+}
+.politician .result strong.winner {
+    color: #108a0e;
+}
+.politician .result strong {
+    font-size: 1.1rem;
 }
 .politician .office {
     margin: 0;

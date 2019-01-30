@@ -11,30 +11,38 @@
 </head>
 
 <body>
-    <header>
-        <img class="logo" src="./images/logo.png" alt="">
-    </header>
     <main>
-        <div class="slide show" id="slide-1">
-            <img src="./images/vote.png" alt="">
-            <h2>Enables You Give Mandate...</h2>
+        <div class="header">
+            <a href="./index.html">
+                <img class="home logo" src="./images/logo.png" alt="Politico logo">
+            </a>
+            <div class="header-text">
+                <h1>Welcome to Politico</h1>
+                <h3>The enabling environment for free and fair elections.</h3>
+                <div class="act">
+                    <a class="btn btn-lg btn-red" href="./register.html">Register</a>
+                    <a class="btn btn-lg btn-green" href="./login.html">Login</a>
+                </div>
+            </div>
         </div>
-        <div class="slide" id="slide-2">
-            <img src="./images/trust1.png" alt="">
-            <h2>Building Trust in the Process</h2>
+        <div class="features container">
+            <div class="col-1">
+                <img src="./images/vote.png" alt="">
+                <p>Enables You Give Mandate...</p>
+            </div>
+            <div class="col-1">
+                <img src="./images/trust1.png" alt="">
+                <p>Building Trust in the Process</p>
+            </div>
+            <div class="col-1">
+                <img src="./images/trans.png" alt="">
+                <p>Trust through Transparency</p>
+            </div>
         </div>
-        <div class="slide" id="slide-3">
-            <img src="./images/trans.png" alt="">
-            <h2>Trust through Transparency</h2>
-        </div>
-        <div>
-            <a class="btn btn-red" href="./register.html">Register</a>
-            <a class="btn btn-green" href="./login.html">Login</a>
-        </div>
-        <p class="text-right w-100 pr-3">&copy; <span id="copyYear">2019</span> Politico</p>
     </main>
-    <script src="./js/script.js"></script>
-    <script src="./js/home.js"></script>
+    <footer>
+        <p class="text-center">&copy; <span id="copyYear">2019</span> Politico</p>
+    </footer>
 </body>
 
 </html>

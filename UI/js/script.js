@@ -29,7 +29,7 @@ const triggerModal = modalId => {
 
 const formInputListener = form => {
     for (let element of form.elements) {
-        element.oninput = function (event) {
+        element.oninput = event => {
             let errorSpan = element.closest('.input-group').querySelector('.form-error')
             if (errorSpan) errorSpan.innerHTML = '';
         }
@@ -91,7 +91,7 @@ $('.modal', true).forEach(modal => modal.onclick = () => {
     }, 300)
 })
 
-$('.modal-content', true).forEach(mContent => mContent.onclick = function (e) {
+$('.modal-content', true).forEach(mContent => mContent.onclick = e => {
     e.stopPropagation();
 })
 
@@ -106,4 +106,33 @@ $('a[href^="#"]', true).forEach(anchor => {
         targetElem.scrollIntoView({ behavior: "smooth", block: "center" });
         e.preventDefault();
     })
+})
+
+$('img.upload', true).forEach(uploder => {
+    uploder.onclick = event => {
+        const inputFile = uploder.closest('.input-group').querySelector('input[type=file]');
+        if (inputFile) inputFile.click();
+    }
+});
+
+$('input[type=file]', true).forEach(inputFile => {
+    inputFile.onchange = event => {
+        const imgHolder = inputFile.closest('.input-group').querySelector('img.upload');
+        if (!imgHolder || !inputFile.files || !inputFile.files[0]) return;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            imgHolder.setAttribute('src', e.target.result);
+        }
+        reader.readAsDataURL(inputFile.files[0]);
+        inputFile.closest('.input-group').querySelector('.upload-image').classList.add('uploaded');
+    }
+});
+
+$('.upload-image .remove', true).forEach(removeImg => {
+    removeImg.onclick = event => {
+        const inpGrp = removeImg.closest('.input-group');
+        inpGrp.querySelector('.upload-image').classList.remove('uploaded');
+        inpGrp.querySelector('img.upload').setAttribute('src', './images/upload.webp');
+        inpGrp.querySelector('input[type=file]').value = null;
+    }
 })

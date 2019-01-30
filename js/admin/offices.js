@@ -17,23 +17,23 @@ $('.toggle-modal', true).forEach(item => {
 document.addEventListener("DOMContentLoaded", function(event) {
     const offices = [
         {
-            name: "Preseident",
+            name: "President",
             type: "federal",
         },
         {
-            name: "Preseident",
+            name: "President",
             type: "federal",
         },
         {
-            name: "Preseident",
+            name: "President",
             type: "federal",
         },
         {
-            name: "Preseident",
+            name: "President",
             type: "federal",
         },
         {
-            name: "Preseident",
+            name: "President",
             type: "federal",
         }
     ]

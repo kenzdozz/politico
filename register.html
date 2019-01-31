@@ -21,42 +21,55 @@
             <h1 class="title">Create Account</h1>
             <form id="registerForm" action="">
                 <div class="input-group">
-                    <label for="first_name">First name:</label>
-                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="John"
+                    <label class="req" for="photo">Passport photo:</label>
+                    <div class="upload-image">
+                        <img class="remove" src="./images/remove.png" alt="Remove">
+                        <img class="upload" src="./images/upload.webp" alt="Upload Image">
+                    </div>
+                    <input class="hidden" type="file" name="photo" id="photo" accept="image/*">
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label class="req" for="firstname">First name:</label>
+                    <input type="text" class="form-control" name="firstname" id="firstname" placeholder="John" required>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label class="req" for="lastname">Last name:</label>
+                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Doe" required>
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label for="othername">Other name:</label>
+                    <input type="text" class="form-control" name="othername" id="othername" placeholder="Mark">
+                    <span class="form-error"></span>
+                </div>
+                <div class="input-group">
+                    <label class="req" for="phoneNumber">Phone number:</label>
+                    <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="08012345789"
                         required>
                     <span class="form-error"></span>
                 </div>
                 <div class="input-group">
-                    <label for="last_name">Last name:</label>
-                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Doe" required>
-                    <span class="form-error"></span>
-                </div>
-                <div class="input-group">
-                    <label for="voter_id">NIN <span class="help" title="National Identification Number">?</span>:
-                    </label>
-                    <input type="text" class="form-control" name="voter_id" id="voter_id" placeholder="12345" required>
-                    <span class="form-error"></span>
-                </div>
-                <div class="input-group">
-                    <label for="email">Email Address:</label>
+                    <label class="req" for="email">Email Address:</label>
                     <input type="email" class="form-control" name="email" id="email" placeholder="john.doe@xyz.com"
                         required>
                     <span class="form-error"></span>
                 </div>
                 <div class="input-group">
-                    <label for="password">Password:</label>
+                    <label class="req" for="password">Password:</label>
                     <input type="password" class="form-control" name="password" id="password" placeholder="********"
                         required>
                     <span class="form-error"></span>
                 </div>
                 <div class="input-group">
-                    <label for="confirm-password">Confirm Password:</label>
+                    <label class="req" for="confirm-password">Confirm Password:</label>
                     <input type="password" class="form-control" name="confirm_password" id="confirm-password"
                         placeholder="********" required>
                 </div>
                 <div class="input-group">
                     <fieldset>
-                        <legend>Gender</legend>
+                        <legend class="req">Gender</legend>
                         <input id="male" type="radio" name="gender" value="Male" required>
                         <label for="male">Male</label>
                         <input id="female" type="radio" name="gender" value="Female" required>
@@ -66,7 +79,7 @@
                 </div>
                 <div class="input-group">
                     <input type="checkbox" name="terms" id="terms" required>
-                    <label for="terms">Accept <a href="#">terms and condition</a>?</label>
+                    <label class="req" for="terms">Accept <a href="#">terms and condition</a>?</label>
                     <span class="form-error"></span>
                 </div>
                 <div class="input-group">
@@ -77,10 +90,9 @@
         </div>
     </main>
     <footer>
-        <p class="text-center">&copy; <span id="copyYear">2019</span> Politico</p>
+        <p class="text-center text-dark">&copy; <span id="copyYear">2019</span> Politico</p>
     </footer>
     <script src="./js/script.js"></script>
     <script src="./js/register.js"></script>
 </body>
-
 </html>

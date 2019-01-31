@@ -121,15 +121,16 @@ nav ul li{
     padding: 20px;
 }
 .dash-items .item-pp {
-    background: var(--secondaryColor);
-    color: #ffffff;
+    background: #ecfbe8;
+    color: #000000;
 }
 .dash-items .item-po {
-    background: #8A0E54;
+    background: #707e69;
     color: #ffffff;
 }
 .dash-items .item-us {
-    background: #ff0000;
+    background: #444444;
+    color: #ffffff;
 }
 .dash-items a {
     text-decoration: none;
@@ -221,7 +222,7 @@ tr:nth-child(even) td {
 .auth-container {
     box-shadow: 0px 0px 6px #c0c0c0;
     background-color: #ffffff;
-    max-width: 480px;
+    max-width: 580px;
     width: 100%;
     padding: 0 35px;
 }
@@ -242,20 +243,46 @@ tr:nth-child(even) td {
     flex-wrap: wrap;
     align-items: center;
 }
+.input-group label.req::after, .input-group legend.req::after {
+    content: " *";
+    color: #ff0000;
+}
 .input-group label {
     margin-right: 7px;
 }
-.input-group input:not([type='checkbox']), select {
+.input-group input:not([type='checkbox']), select, textarea {
     flex-grow: 1 !important;
 }
 .input-group .upload-image img {
     max-width: 200px;
+    width: 100%;
     display: block;
     margin: auto;
 }
 .input-group .upload-image {
     flex-basis: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+.input-group .upload-image:not(.uploaded) img.upload:hover {
+    box-shadow: 1px 1px 5px 1px #cccccc;
+}
+.input-group .upload-image:not(.uploaded) img.upload {
+    cursor: pointer;
+}
+.input-group .upload-image img.upload {
+    max-width: 150px;
+    max-height: 180px;
+}
+.input-group .upload-image:not(.uploaded) .remove {
+    display: none;
+}
+.input-group .upload-image .remove {
+    position: absolute;
+    width: 30px;
+    top: 0;
+    left: 60%;
+    cursor: pointer;
 }
 .form-error {
     color: #ff0000;
@@ -263,6 +290,12 @@ tr:nth-child(even) td {
     flex: 0 0 100%;
     text-align: right;
     margin: 3px;
+}
+.hidden {
+    display: none;
+}
+.align-base {
+    align-self: baseline;
 }
 fieldset {
     width: 100%;
@@ -279,7 +312,7 @@ button:hover {
     padding: .35rem .85rem;
     text-decoration: none;
     display: inline-block;
-    margin: auto 5px;
+    margin: 5px;
 }
 .btn-outline {
     border: 1px solid;
@@ -287,6 +320,10 @@ button:hover {
 .btn-sm {
     font-size: 0.85rem;
     padding: .1rem .75rem;
+}
+.btn-lg {
+    font-size: 1.2rem;
+    padding: .5rem 2rem;
 }
 .btn-red {
     color: #000000;
@@ -303,6 +340,9 @@ button:hover {
 }
 .text-center {
     text-align: center;
+}
+.text-dark {
+    color: #333333;
 }
 span.help {
     border: 1px solid var(--lightGray);
@@ -454,7 +494,11 @@ span.modal-close {
 }
 .politician .office {
     margin: 0;
-    font-size: .9rem;
+    font-size: .95rem;
+}
+.politician .address {
+    font-size: .85rem;
+    margin-bottom: 0;
 }
 .politician .btn:hover {
     background-color: #3f840f;

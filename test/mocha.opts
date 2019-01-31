@@ -1,1 +1,4 @@
 --recursive
+--exclude **/Candidate/*.test.js
+--exclude **/User/*.test.js
+--exclude **/Vote/*.test.js

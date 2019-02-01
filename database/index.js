@@ -20,7 +20,7 @@ const down = () => {
 
 const dbQuery = async (query) => {
   const res = await pool.query(query);
-  return res;
+  return res.rows;
 };
 
 export {

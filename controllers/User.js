@@ -5,9 +5,9 @@ import User from '../database/models/User';
 
 const UserController = {
   createUser: async (req, res) => {
-    const { passport } = req.body;
+    const { body } = req;
 
-    const passportUrl = base64ImageDecode(passport, 'user');
+    const passportUrl = base64ImageDecode(body.passport, 'user');
     if (!passportUrl) {
       return new Response(res, codes.badRequest, {
         error: 'Validation errors',
@@ -18,16 +18,27 @@ const UserController = {
     }
 
     try {
-      const user = await User.create({ passportUrl, ...req.body });
-      console.log(user)
+      const columns = ['firstname', 'lastname', 'othername', 'gender',
+        'email', 'password', 'phoneNumber', 'passportUrl'];
+      const data = [
+        body.firstname, body.lastname, body.othername, body.gender,
+        body.email, body.password, body.phoneNumber, passportUrl,
+      ];
+
+      const user = await User.create(columns, data);
       return new Response(res, codes.created, {
-        data: [
-          user,
-        ],
+        data: user,
       });
     } catch (error) {
-      console.log("tttt")
-      return res.send(error);
+      console.log(error);
+      if (error.code == 23505) {
+        return new Response(res, codes.serverError, {
+          error: error.detail.replace(/\(|\)|Key /g, '').replace('=', ': '),
+        });
+      }
+      return new Response(res, codes.serverError, {
+        error: 'Internal server error',
+      });
     }
   },
 

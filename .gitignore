@@ -14,3 +14,4 @@ public/
 
 coveralls.yml
 package-lock.json
+.env

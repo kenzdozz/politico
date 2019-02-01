@@ -17,30 +17,37 @@ $('.toggle-modal', true).forEach(item => {
 document.addEventListener("DOMContentLoaded", function(event) {
     const parties = [
         {
+            logoUrl: './../images/pdp.png',
             name: "People Democratic Party",
             address: "Aso Rock, Abuja",
         },
         {
+            logoUrl: './../images/pdp.png',
             name: "People Democratic Party",
             address: "Aso Rock, Abuja",
         },
         {
+            logoUrl: './../images/pdp.png',
             name: "People Democratic Party",
             address: "Aso Rock, Abuja",
         },
         {
+            logoUrl: './../images/pdp.png',
             name: "People Democratic Party",
             address: "Aso Rock, Abuja",
         },
         {
+            logoUrl: './../images/pdp.png',
             name: "People Democratic Party",
             address: "Aso Rock, Abuja",
         },
         {
+            logoUrl: './../images/pdp.png',
             name: "People Democratic Party",
             address: "Aso Rock, Abuja",
         },
         {
+            logoUrl: './../images/pdp.png',
             name: "People Democratic Party",
             address: "Aso Rock, Abuja",
         }
@@ -48,11 +55,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
     const table = $('table tbody');
     parties.forEach(party => {
-        let row = document.createElement('tr');
-        row.append(document.createElement('td'))
+        const row = document.createElement('tr');
         for (let prop in party) {
-            let data = document.createElement('td');
-            data.innerHTML = party[prop];
+            const data = document.createElement('td');
+            if (prop === 'logoUrl') {
+                const logo = document.createElement('img');
+                logo.src = party[prop];
+                data.append(logo);
+            } else {
+                data.innerHTML = party[prop];
+            }
             row.append(data)
         }
         let editBtn = createElement('a', {

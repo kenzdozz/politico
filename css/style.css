@@ -499,6 +499,10 @@ span.modal-close {
     /* height: 80px; */
     right: 1rem;
 }
+.politician.petition .card {
+    padding: 20px;
+    cursor: pointer;
+}
 .politician .user-img {
     width: 100%;
     display: block;

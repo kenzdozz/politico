@@ -7,11 +7,15 @@ const validateInputs = rules => async (req, res, next) => {
   const errors = [];
   let conflict = false;
   let uniqueModel = '';
+
   await rules.forEach((rule) => {
     if (errors.find(error => error[rule.name])) return;
+
     let isValid = false;
     let bodyParam = body[rule.name] ? body[rule.name] : '';
+
     if (Number.isNaN(parseInt(bodyParam, 10))) bodyParam = bodyParam.trim();
+
     switch (rule.rule) {
       case 'unique':
         isValid = !Models[rule.model].exists(rule.name, bodyParam);
@@ -19,12 +23,6 @@ const validateInputs = rules => async (req, res, next) => {
       case 'email':
         isValid = /\S+@\S+\.\S+/.test(bodyParam);
         break;
-      // case 'min':
-      //   isValid = bodyParam <= rule.value;
-      //   break;
-      // case 'max':
-      //   isValid = bodyParam >= rule.value;
-      //   break;
       case 'number':
         isValid = !Number.isNaN(parseInt(bodyParam, 10));
         break;
@@ -43,12 +41,14 @@ const validateInputs = rules => async (req, res, next) => {
       errors.push(error);
     }
   });
+
   if (errors.length) {
-    return new Response(res, conflict ? codes.conflict : codes.badRequest, {
+    return Response.send(res, conflict ? codes.conflict : codes.badRequest, {
       error: conflict ? `${uniqueModel} already exists.` : 'Validation errors.',
       fields: errors,
     });
   }
+
   return next();
 };
 

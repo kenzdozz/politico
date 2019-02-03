@@ -4,7 +4,7 @@
   "description": "Politico enables citizens give their mandate to politicians running for different government offices while building trust in the process through transparency.",
   "main": "app.js",
   "scripts": {
-    "test": "nyc mocha --require babel-register --exit",
+    "test": "ENV=test nyc mocha --require babel-register --exit",
     "cover": "nyc --reporter=html --reporter=text mocha --require babel-register --recursive --exit",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "build": "babel ./ -d build --ignore 'node_modules','UI' ",
@@ -54,8 +54,10 @@
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.1",
+    "nodemailer": "^5.1.1",
     "pg": "^7.8.0"
   }
 }

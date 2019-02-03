@@ -7,11 +7,12 @@ const create = `
         gender varchar (20),
         email varchar (100) UNIQUE NOT NULL,
         password varchar (255) NOT NULL,
-        phoneNumber varchar (40) UNIQUE NOT NULL,
-        passportUrl varchar (255) UNIQUE NOT NULL,
-        isAdmin varchar (20) DEFAULT 'false',
-        createdAt TIMESTAMP WITH TIME ZONE DEFAULT now(),
-        modifiedAt TIMESTAMP WITH TIME ZONE DEFAULT now()
+        phonenumber varchar (40) UNIQUE NOT NULL,
+        passporturl varchar (255) NOT NULL,
+        isadmin varchar (20) DEFAULT 'false',
+        emailtoken varchar (500),
+        createdat TIMESTAMP WITH TIME ZONE DEFAULT now(),
+        modifiedat TIMESTAMP WITH TIME ZONE DEFAULT now()
     );
 `;
 

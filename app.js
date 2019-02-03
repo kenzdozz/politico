@@ -3,8 +3,11 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import 'dotenv/config';
-import { officeRoutes, partyRoutes, authRoutes } from './routes';
 import codes from './helpers/statusCode';
+import {
+  officeRoutes, partyRoutes,
+  authRoutes, userRoutes,
+} from './routes';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,6 +26,7 @@ app.get('/', (req, res) => res.status(codes.success).send({
 
 app.use('/api/v1/parties', partyRoutes);
 app.use('/api/v1/offices', officeRoutes);
+app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authRoutes);
 
 app.listen(PORT);

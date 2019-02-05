@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin Dashboard - Politico</title>
+    <title>Users - Admin, Politico</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="./../css/style.css" />
 </head>
@@ -23,7 +23,7 @@
             <nav>
                 <ul>
                     <li>
-                        <a class="nav-link active" href="./index.html">Dashboard</a>
+                        <a class="nav-link" href="./index.html">Dashboard</a>
                     </li>
                     <li>
                         <a class="nav-link" href="./parties.html">Parties</a>
@@ -32,7 +32,7 @@
                         <a class="nav-link" href="./offices.html">Offices</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="./users.html">Users</a>
+                        <a class="nav-link active" href="./users.html">Users</a>
                     </li>
                     <li class="nav-dropdown">
                         <a class="nav-link" href="#">
@@ -53,43 +53,37 @@
         </div>
     </header>
 
-    <main>
+    <main class="container">
         <div class="container">
-            <h1>Admin Dashboard</h1>
-            <div class="d-flex">
-                <div class="card dash-items">
-                    <div class="item bg-white">
-                        <h2>Political Parties</h2>
-                        <p class="count">48</p>
-                        <a href="./parties.html">Manage</a>
-                    </div>
-                    <div class="item bg-darker">
-                        <h2>Political Offices</h2>
-                        <p class="count">20</p>
-                        <a href="./offices.html">Manage</a>
-                    </div>
-                    <div class="item bg-white">
-                        <h2>Results</h2>
-                        <a href="./results.html">Manage</a>
-                    </div>
-                    <div class="item bg-darker">
-                        <h2>Candidates</h2>
-                        <a href="./candidates.html">Manage</a>
-                    </div>
-                    <div class="item bg-white">
-                        <h2>Users</h2>
-                        <p class="count">430</p>
-                        <a href="./users.html">Manage</a>
-                    </div>
-                    <div class="item bg-darker">
-                        <h2>Petitions</h2>
-                        <p class="count">13</p>
-                        <a href="./petitions.html">Manage</a>
-                    </div>
+            <h1>Users</h1>
+            <div class="card">
+                <div class="table-responsive">
+                    <table id="candidatesTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone number</th>
+                                <th>Gender</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="dialogModal" class="modal">
+            <div class="modal-content">
+                <h2 class="modal-title">Continue with action?</h2>
+                <div class="input-group">
+                    <button type="button">OK</button>
+                    <button type="button" class="modal-close ml-auto">Cancel</button>
                 </div>
             </div>
         </div>
     </main>
+
     <footer>
         <div class="text-center">
             <span>&copy; <span id="copyYear">2019</span> Politico</span>
@@ -97,6 +91,7 @@
     </footer>
 
     <script src="./../js/script.js"></script>
+    <script src="./../js/admin/users.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,3 @@
 --recursive
 --exclude **/Candidate/*.test.js
---exclude **/Office/*.test.js
---exclude **/Party/*.test.js
 --exclude **/Vote/*.test.js

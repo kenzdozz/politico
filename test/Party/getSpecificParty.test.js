@@ -4,13 +4,17 @@ import app from '../../app';
 import statusCodes from '../../helpers/statusCode';
 import Party from '../../database/models/Party';
 import { parties } from '../../helpers/mockData';
+import { dbQuery } from '../../database';
+import * as partyTable from '../../database/migrations/partyTable';
 
 chai.use(chaiHttp);
 
 let party;
 describe('Get all political parties: GET /parties/<party-id>', () => {
   before(async () => {
-    party = await Party.create(parties[0]);
+    await dbQuery(partyTable.drop);
+    await dbQuery(partyTable.create);
+    party = await Party.create(parties[4]);
   });
 
   it('should return a specific party', async () => {
@@ -20,11 +24,10 @@ describe('Get all political parties: GET /parties/<party-id>', () => {
     expect(response.status).to.eqls(statusCodes.success);
     expect(response.body).to.be.an('object');
     expect(response.body.status).to.eqls(statusCodes.success);
-    expect(response.body.data.length).to.eqls(1);
-    expect(response.body.data[0].name).to.eqls(party.name);
-    expect(response.body.data[0].acronym).to.eqls(party.acronym);
-    expect(response.body.data[0].hqAddress).to.eqls(party.hqAddress);
-    expect(response.body.data[0].logoUrl).to.be.a('string');
+    expect(response.body.data.name).to.eqls(party.name);
+    expect(response.body.data.acronym).to.eqls(party.acronym);
+    expect(response.body.data.hqaddress).to.eqls(party.hqaddress);
+    expect(response.body.data.logourl).to.be.a('string');
   });
 
   it('should fail to return a party', async () => {

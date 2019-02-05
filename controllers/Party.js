@@ -9,7 +9,7 @@ const PartyController = {
 
     const logoUrl = base64ImageDecode(logo, 'party', 'png');
     if (!logoUrl) {
-      return new Response(res, codes.badRequest, {
+      return Response.send(res, codes.badRequest, {
         error: 'Validation errors',
         fields: {
           field: 'logo',
@@ -18,54 +18,61 @@ const PartyController = {
       });
     }
 
-    const party = Party.create({ name, hqAddress, logoUrl });
-
-    return new Response(res, codes.created, {
-      data: [
-        party,
-      ],
-    });
-  },
-
-  getParties: (req, res) => {
-    const parties = Party.findAll();
-    return new Response(res, codes.success, {
-      data: parties,
-    });
-  },
-
-  getParty: (req, res) => {
-    const party = Party.findOne(parseInt(req.params.id, 10));
-    if (!party) {
-      return new Response(res, codes.notFound, {
-        error: 'Party not found.',
+    try {
+      const party = await Party.create({ name, hqAddress, logoUrl });
+      return Response.send(res, codes.created, {
+        data: party,
       });
-    }
-    return new Response(res, codes.success, {
-      data: [party],
-    });
+    } catch (error) { return Response.handleError(res, error); }
+  },
+
+  getParties: async (req, res) => {
+    try {
+      const parties = await Party.all();
+      return Response.send(res, codes.success, {
+        data: parties,
+      });
+    } catch (error) { return Response.handleError(res, error); }
+  },
+
+  getParty: async (req, res) => {
+    try {
+      const party = await Party.find(parseInt(req.params.id, 10));
+      if (!party) {
+        return Response.send(res, codes.notFound, {
+          error: 'Party not found.',
+        });
+      }
+      return Response.send(res, codes.success, {
+        data: party,
+      });
+    } catch (error) { return Response.handleError(res, error); }
   },
 
   editParty: async (req, res) => {
     const { name, hqAddress, logo } = req.body;
-    const party = await Party.update(parseInt(req.params.id, 10), { name, hqAddress, logo });
-    if (!party) {
-      return new Response(res, codes.notFound, {
-        error: 'Party not found.',
+    try {
+      const party = await Party.update(parseInt(req.params.id, 10), { name, hqAddress, logo });
+      if (!party) {
+        return Response.send(res, codes.notFound, {
+          error: 'Party not found.',
+        });
+      }
+      return Response.send(res, codes.success, {
+        data: party,
       });
-    }
-    return new Response(res, codes.success, {
-      data: [party],
-    });
+    } catch (error) { return Response.handleError(res, error); }
   },
 
   deleteParty: (req, res) => {
-    Party.delete(parseInt(req.params.id, 10));
-    return new Response(res, codes.success, {
-      data: [{
-        message: 'Party deleted successfully.',
-      }],
-    });
+    try {
+      Party.delete(parseInt(req.params.id, 10));
+      return Response.send(res, codes.success, {
+        data: {
+          message: 'Party deleted successfully.',
+        },
+      });
+    } catch (error) { return Response.handleError(res, error); }
   },
 };
 

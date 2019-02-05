@@ -1,3 +1,6 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
+
 import codes from '../helpers/statusCode';
 import Response from '../helpers/Response';
 import Models from '../database/models';
@@ -8,27 +11,18 @@ const validateInputs = rules => async (req, res, next) => {
   let conflict = false;
   let uniqueModel = '';
 
-  await rules.forEach((rule) => {
-    if (errors.find(error => error[rule.name])) return;
-
-    let isValid = false;
+  for (const rule of rules) {
+    let isValid = true;
     let bodyParam = body[rule.name] ? body[rule.name] : '';
-
     if (Number.isNaN(parseInt(bodyParam, 10))) bodyParam = bodyParam.trim();
-
-    switch (rule.rule) {
-      case 'unique':
-        isValid = !Models[rule.model].exists(rule.name, bodyParam);
-        break;
-      case 'email':
-        isValid = /\S+@\S+\.\S+/.test(bodyParam);
-        break;
-      case 'number':
-        isValid = !Number.isNaN(parseInt(bodyParam, 10));
-        break;
-      default: // required
-        isValid = !!bodyParam;
-        break;
+    if (rule.rule === 'required') {
+      isValid = !!bodyParam;
+    } else if (rule.rule === 'unique' && bodyParam) {
+      isValid = !(await Models[rule.model].exists(rule.name, bodyParam));
+    } else if (rule.rule === 'email') {
+      isValid = /\S+@\S+\.\S+/.test(bodyParam);
+    } else if (rule.rule === 'number') {
+      isValid = !Number.isNaN(parseInt(bodyParam, 10));
     }
 
     if (!isValid) {
@@ -40,7 +34,7 @@ const validateInputs = rules => async (req, res, next) => {
       error[rule.name] = rule.message;
       errors.push(error);
     }
-  });
+  }
 
   if (errors.length) {
     return Response.send(res, conflict ? codes.conflict : codes.badRequest, {
@@ -48,7 +42,6 @@ const validateInputs = rules => async (req, res, next) => {
       fields: errors,
     });
   }
-
   return next();
 };
 

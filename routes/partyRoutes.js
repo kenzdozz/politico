@@ -2,13 +2,14 @@ import express from 'express';
 import validateInputs from '../middlewares/validateInputs';
 import PartyController from '../controllers/Party';
 import { partyRules } from '../middlewares/validationRules';
+import { authenticated, isAdmin } from '../middlewares/authentication';
 
 const router = express.Router();
 
-router.route('/').post(validateInputs(partyRules), PartyController.createParty);
-router.route('/').get(PartyController.getParties);
-router.route('/:id').get(PartyController.getParty);
-router.route('/:id').patch(PartyController.editParty);
-router.route('/:id').delete(PartyController.deleteParty);
+router.route('/').post(authenticated, isAdmin, validateInputs(partyRules), PartyController.createParty);
+router.route('/:id').patch(authenticated, isAdmin, PartyController.editParty);
+router.route('/:id').delete(authenticated, isAdmin, PartyController.deleteParty);
+router.route('/').get(authenticated, PartyController.getParties);
+router.route('/:id').get(authenticated, PartyController.getParty);
 
 export default router;

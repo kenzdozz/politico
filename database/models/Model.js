@@ -22,6 +22,7 @@ class Model {
   }
 
   async update(id, data) {
+    if (!await this.exists(id)) return null;
     const updateData = data;
     Object.keys(updateData).forEach((key) => {
       if (data[key] === undefined || updateData[key] === '') {
@@ -116,7 +117,6 @@ class Model {
 
     this.text = '';
     const results = await dbQuery(query);
-    // console.log(results)
     return results[0];
   }
 

@@ -38,6 +38,7 @@ const AuthController = {
       }
       delete user.password;
       const token = TokenUtil.sign(user);
+      res.cookie('token', token);
       return Response.send(res, codes.success, {
         data: { token, user },
       });

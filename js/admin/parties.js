@@ -55,7 +55,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
     const table = $('table tbody');
     parties.forEach(party => {
+      
         const row = document.createElement('tr');
+      
         for (let prop in party) {
             const data = document.createElement('td');
             if (prop === 'logoUrl') {

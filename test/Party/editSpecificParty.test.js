@@ -33,9 +33,9 @@ describe('Get all political parties: GET /parties/<party-id>', () => {
     ({ token } = response.body.data);
   });
 
-  it('should return a specific party', async () => {
+  it('should edit a specific party', async () => {
     const response = await chai.request(app).patch(`/api/v1/parties/${party.id}`)
-      .set('authorization', token).send({ hqAddress: 'Aso Rock Villa, Abuja' });
+      .set('authorization', token).send({ hqaddress: 'Aso Rock Villa, Abuja' });
 
     expect(response.status).to.eqls(statusCodes.success);
     expect(response.body).to.be.an('object');
@@ -48,7 +48,7 @@ describe('Get all political parties: GET /parties/<party-id>', () => {
 
   it('should fail to edit a party', async () => {
     const response = await chai.request(app).patch('/api/v1/parties/987')
-      .set('authorization', token).send({ hqAddress: 'Aso Rock Villa, Abuja' });
+      .set('authorization', token).send({ hqaddress: 'Aso Rock Villa, Abuja' });
 
     expect(response.status).to.eqls(statusCodes.notFound);
     expect(response.body.status).to.eqls(statusCodes.notFound);

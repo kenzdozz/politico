@@ -43,7 +43,7 @@ describe('Get all political parties: GET /parties', () => {
     expect(response.body.data.length).to.eqls(2);
     expect(response.body.data[0].name).to.eqls(parties[3].name);
     expect(response.body.data[0].acronym).to.eqls(parties[3].acronym);
-    expect(response.body.data[0].hqaddress).to.eqls(parties[3].hqAddress);
+    expect(response.body.data[0].hqaddress).to.eqls(parties[3].hqaddress);
     expect(response.body.data[0].logourl).to.be.a('string');
   });
 

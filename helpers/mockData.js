@@ -2,30 +2,30 @@ const parties = [
   {
     name: 'People Democratic Party',
     acronym: 'PDP',
-    hqAddress: 'Behind Aso Rock, Abuja',
+    hqaddress: 'Behind Aso Rock, Abuja',
     logo: '/base/64',
   },
   {
     acronym: 'APC',
-    hqAddress: 'Behind Aso Rock, Abuja',
+    hqaddress: 'Behind Aso Rock, Abuja',
     logo: '/base/64',
   },
   {
     name: 'Labour Party',
     acronym: 'LP',
-    hqAddress: 'Behind Aso Rock, Abuja',
+    hqaddress: 'Behind Aso Rock, Abuja',
     logo: '/base/64',
   },
   {
     name: 'Labour Party',
     acronym: 'LP',
-    hqAddress: 'Behind Aso Rock, Abuja',
+    hqaddress: 'Behind Aso Rock, Abuja',
     logoUrl: '/base/64',
   },
   {
     name: 'People Democratic Party',
     acronym: 'APC',
-    hqAddress: 'Behind Aso Rock, Abuja',
+    hqaddress: 'Behind Aso Rock, Abuja',
     logoUrl: '/base/64',
   },
 ];

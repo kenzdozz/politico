@@ -42,8 +42,8 @@ const registerRules = [
   },
   {
     name: 'passport',
-    rule: 'required',
-    message: 'Passport is required.',
+    rule: 'image',
+    message: 'Passport is required - jpg or png.',
   },
 ];
 
@@ -110,14 +110,14 @@ const partyRules = [
     message: 'Party already exists.',
   },
   {
-    name: 'hqAddress',
+    name: 'hqaddress',
     rule: 'required',
     message: 'Headquater address is required.',
   },
   {
     name: 'logo',
-    rule: 'required',
-    message: 'Party logo is required.',
+    rule: 'image',
+    message: 'Logo is required - jpg or png.',
   },
 ];
 

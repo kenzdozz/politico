@@ -45,6 +45,7 @@
     "nyc": "^13.1.0"
   },
   "dependencies": {
+    "aws-sdk": "^2.397.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -55,8 +56,9 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
-    "mkdirp": "^0.5.1",
     "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "multer-s3": "^2.9.0",
     "nodemailer": "^5.1.1",
     "pg": "^7.8.0"
   }

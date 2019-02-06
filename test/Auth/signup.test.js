@@ -1,5 +1,6 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
+import fs from 'fs';
 import app from '../../app';
 import statusCodes from '../../helpers/statusCode';
 import { users } from '../../helpers/mockData';
@@ -19,8 +20,14 @@ describe('Sign up a user: POST /auth/signup', () => {
   });
 
   it('should successfully signup a new user', async () => {
-    const response = await chai.request(app)
-      .post('/api/v1/auth/signup').send(newUser);
+    const response = await chai.request(app).post('/api/v1/auth/signup')
+      .field('firstname', newUser.firstname)
+      .field('gender', newUser.gender)
+      .field('email', newUser.email)
+      .field('lastname', newUser.lastname)
+      .field('password', newUser.password)
+      .field('phonenumber', newUser.phonenumber)
+      .attach('passport', fs.readFileSync(`${__dirname}/avatar.jpg`), 'avatar.jpg');
 
     expect(response.status).to.eqls(statusCodes.created);
     expect(response.body).to.be.an('object');

@@ -41,7 +41,7 @@ describe('Create a political party: POST /parties', () => {
     expect(response.body.status).to.eqls(statusCodes.created);
     expect(response.body.data.id).to.be.a('number');
     expect(response.body.data.name).to.eqls(newParty1.name);
-    expect(response.body.data.hqaddress).to.eqls(newParty1.hqAddress);
+    expect(response.body.data.hqaddress).to.eqls(newParty1.hqaddress);
     expect(response.body.data.logourl).to.be.a('string');
   });
 

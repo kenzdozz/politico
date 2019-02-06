@@ -42,6 +42,7 @@ const validateInputs = rules => async (req, res, next) => {
       fields: errors,
     });
   }
+
   return next();
 };
 

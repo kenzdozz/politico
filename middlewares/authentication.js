@@ -9,7 +9,6 @@ const authenticated = (req, res, next) => {
       error: 'Authorization is required to access this content.',
     });
   }
-  token = token.split(' ')[1] || token;
   const user = TokenUtil.verify(token);
   if (!user) {
     return Response.send(res, codes.unAuthorized, {

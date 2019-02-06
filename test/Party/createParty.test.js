@@ -1,6 +1,7 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import bcrypt from 'bcrypt';
+import fs from 'fs';
 import app from '../../app';
 import statusCodes from '../../helpers/statusCode';
 import { parties, users } from '../../helpers/mockData';
@@ -34,7 +35,11 @@ describe('Create a political party: POST /parties', () => {
 
   it('should successfully create a new party', async () => {
     const response = await chai.request(app)
-      .post('/api/v1/parties').set('authorization', token).send(newParty1);
+      .post('/api/v1/parties').set('authorization', token)
+      .field('acronym', newParty1.acronym)
+      .field('hqaddress', newParty1.hqaddress)
+      .field('name', newParty1.name)
+      .attach('logo', fs.readFileSync(`${__dirname}/pdp.png`), 'avatar.jpg');
 
     expect(response.status).to.eqls(statusCodes.created);
     expect(response.body).to.be.an('object');

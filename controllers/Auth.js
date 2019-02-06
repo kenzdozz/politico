@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import bcrypt from 'bcrypt';
-import nodemailer from 'nodemailer';
 import Response from '../helpers/Response';
 import codes from '../helpers/statusCode';
 import User from '../database/models/User';
 import TokenUtil from '../helpers/TokenUtil';
+import sendMail from '../helpers/emailSender';
 
 const AuthController = {
   signup: async (req, res) => {
@@ -56,46 +56,20 @@ const AuthController = {
       }
 
       const emailtoken = Math.random().toString(15).substring(2);
-      const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        auth: {
-          user: 'oqmeslufjugyffgd@ethereal.email',
-          pass: 'kjwYFsNjzTWMSYCRmh',
-        },
-      });
-      const mailOptions = {
-        from: '"Politico" <account@poli-tico.herokuapp.com>',
-        to: email,
-        subject: 'Reset Password Confirmation',
-        text: `Hello ${user.firstname}
-              You requested to reset your password.
-              Your password reset token is: ${emailtoken},
-              Make a patch request to '/auth/reset' with the data: email, token and password(new password)
-              to reset your password.
-              Kindly ignore, if you didn't make the request
-              Politico &copy; ${new Date().getFullYear()}
-              `,
-        html: `<b>Hello ${user.firstname}</b><br>
-              <p>You requested to reset your password.</p>
-              <p>Your password reset token is: ${emailtoken},
-              Make a patch request to '/auth/reset' with the data: email, token and password(new password)
-              to reset your password.</p>
-              <p>Kindly ignore, if you didn't make the request</p><br>
-              <p>Politico &copy; ${new Date().getFullYear()}</p>
-              `,
-      };
+      const message = `<b>Hello ${user.firstname}</b><br>
+        <p>You requested to reset your password.</p>
+        <p>Your password reset token is: ${emailtoken},
+        Make a patch request to '/auth/reset' with the data: email, token and password(new password)
+        to reset your password.</p>
+        <p>Kindly ignore, if you didn't make the request</p><br>
+        <p>Politico &copy; ${new Date().getFullYear()}</p>`;
 
-      const info = await transporter.sendMail(mailOptions);
-      // eslint-disable-next-line no-console
-      console.log('Email Preview: ', nodemailer.getTestMessageUrl(info));
-
-      const useri = await User.update(user.id, { emailtoken });
+      await sendMail(user.email, 'Reset Password Confirmation', message);
+      await User.update(user.id, { emailtoken });
       return Response.send(res, codes.success, {
         data: {
           message: 'Check your email for password reset link.',
           email,
-          useri,
         },
       });
     } catch (error) { return Response.handleError(res, error); }

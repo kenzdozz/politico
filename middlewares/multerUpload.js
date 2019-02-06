@@ -35,7 +35,8 @@ const multerUpload = field => async (request, response, next) => {
     if (err) {
       request.body[field] = 'invalid';
     } else {
-      request.body[field] = request.file.location;
+      const filePath = request.file && request.file.location ? request.file.location : 'invalid';
+      request.body[field] = filePath;
     }
     return next();
   });

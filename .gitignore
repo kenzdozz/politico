@@ -10,7 +10,7 @@ coverage
 # nyc test coverage
 .nyc_output
 
-public/
+public/images/users/*
 
 coveralls.yml
 package-lock.json

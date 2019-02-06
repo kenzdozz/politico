@@ -16,18 +16,24 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 app.get('/', (req, res) => res.status(codes.success).send({
   status: codes.success,
-  data: [{
+  data: {
     message: 'The app is running',
-  }],
+  },
 }));
 
 app.use('/api/v1/parties', partyRoutes);
 app.use('/api/v1/offices', officeRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authRoutes);
+
+app.get('*', (req, res) => res.status(codes.notFound).send({
+  status: codes.notFound,
+  error: 'Page not found.',
+}));
 
 app.listen(PORT);
 

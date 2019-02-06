@@ -4,7 +4,7 @@ node_js:
   - "node"
 
 env:
-  - ENV=travis JWT_SECRET=ufffyguftrstrty56r56t
+  - ENV=travis
 
 services:
   - postgresql

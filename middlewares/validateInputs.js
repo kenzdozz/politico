@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 
@@ -12,6 +13,7 @@ const validateInputs = rules => async (req, res, next) => {
   let uniqueModel = '';
 
   for (const rule of rules) {
+    if (errors.find(error => error[rule.name])) continue;
     let isValid = true;
     let bodyParam = body[rule.name] ? body[rule.name] : '';
     if (Number.isNaN(parseInt(bodyParam, 10))) bodyParam = bodyParam.trim();
@@ -23,6 +25,8 @@ const validateInputs = rules => async (req, res, next) => {
       isValid = /\S+@\S+\.\S+/.test(bodyParam);
     } else if (rule.rule === 'number') {
       isValid = !Number.isNaN(parseInt(bodyParam, 10));
+    } else if (rule.rule === 'image') {
+      isValid = !!bodyParam && bodyParam !== 'invalid';
     }
 
     if (!isValid) {

@@ -4,12 +4,16 @@ import app from '../../app';
 import statusCodes from '../../helpers/statusCode';
 import Office from '../../database/models/Office';
 import { offices } from '../../helpers/mockData';
+import { dbQuery } from '../../database';
+import * as officeTable from '../../database/migrations/officeTable';
 
 chai.use(chaiHttp);
 
 let office;
 describe('Get a specific political office: GET /offices/<office-id>', () => {
   before(async () => {
+    await dbQuery(officeTable.drop);
+    await dbQuery(officeTable.create);
     office = await Office.create(offices[0]);
   });
 
@@ -20,9 +24,8 @@ describe('Get a specific political office: GET /offices/<office-id>', () => {
     expect(response.status).to.eqls(statusCodes.success);
     expect(response.body).to.be.an('object');
     expect(response.body.status).to.eqls(statusCodes.success);
-    expect(response.body.data.length).to.eqls(1);
-    expect(response.body.data[0].name).to.eqls(office.name);
-    expect(response.body.data[0].type).to.eqls(office.type);
+    expect(response.body.data.name).to.eqls(office.name);
+    expect(response.body.data.type).to.eqls(office.type);
   });
 
   it('should fail to return an office', async () => {

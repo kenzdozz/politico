@@ -3,13 +3,20 @@ import chaiHttp from 'chai-http';
 import app from '../../app';
 import statusCodes from '../../helpers/statusCode';
 import { offices } from '../../helpers/mockData';
+import { dbQuery } from '../../database';
+import * as officeTable from '../../database/migrations/officeTable';
+
 
 chai.use(chaiHttp);
 
+const newOffice1 = offices[0];
+const newOffice2 = offices[3];
+
 describe('Create a political office: POST /offices', () => {
-  const newOffice1 = offices[0];
-  const newOffice2 = offices[1];
-  delete newOffice2.name;
+  before(async () => {
+    await dbQuery(officeTable.drop);
+    await dbQuery(officeTable.create);
+  });
 
   it('should successfully create a new party', async () => {
     const response = await chai.request(app)
@@ -18,9 +25,9 @@ describe('Create a political office: POST /offices', () => {
     expect(response.status).to.eqls(statusCodes.created);
     expect(response.body).to.be.an('object');
     expect(response.body.status).to.eqls(statusCodes.created);
-    expect(response.body.data[0].id).to.be.a('number');
-    expect(response.body.data[0].name).to.eqls(newOffice1.name);
-    expect(response.body.data[0].type).to.eqls(newOffice1.type);
+    expect(response.body.data.id).to.be.a('number');
+    expect(response.body.data.name).to.eqls(newOffice1.name);
+    expect(response.body.data.type).to.eqls(newOffice1.type);
   });
 
   it('should fail to create with existing name and type', async () => {

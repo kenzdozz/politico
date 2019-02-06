@@ -1,5 +1,5 @@
 const create = `
-    CREATE TABLE users (
+    CREATE TABLE IF NOT EXISTS users (
         id SERIAL primary key,
         firstname varchar (60) NOT NULL,
         lastname varchar (60) NOT NULL,

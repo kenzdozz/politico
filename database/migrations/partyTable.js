@@ -1,5 +1,5 @@
 const create = `
-    CREATE TABLE parties (
+    CREATE TABLE IF NOT EXISTS parties (
         id SERIAL primary key,
         name varchar (60) NOT NULL,
         acronym varchar (60),

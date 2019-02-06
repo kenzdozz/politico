@@ -8,7 +8,7 @@
     "cover": "nyc --reporter=html --reporter=text mocha --require babel-register --recursive --exit",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "build": "babel ./ -d build --ignore 'node_modules','UI' ",
-    "start": "npm run build && node build/app",
+    "start": "npm run migrate:up && npm run build && node build/app",
     "start:dev": "./node_modules/.bin/babel-watch app.js",
     "migrate:up": "node -e 'require(\"./database\").up()' --require babel-register",
     "migrate:down": "node -e 'require(\"./database\").down()' --require babel-register"

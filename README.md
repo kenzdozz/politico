@@ -47,6 +47,8 @@ psql --version
   - Run `psql -c 'create database politico_test;' -U postgres` to create test database
   - Run `psql -c 'create database politico;' -U postgres` to create main database
   - Update Database names in .env if different from above
+  - Run `npm run migrate:up` to create all tables
+  - Running `npm run migrate:down` will drop all tables
 
 ### Set Environment Variables
 Rename `.env.example` to `.env` and update the variables accordingly

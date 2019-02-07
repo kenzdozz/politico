@@ -1,5 +1,5 @@
 const create = `
-    CREATE TABLE offices (
+    CREATE TABLE IF NOT EXISTS offices (
         id SERIAL primary key,
         type varchar (60) NOT NULL,
         name varchar (100) NOT NULL,

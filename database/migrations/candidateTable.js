@@ -1,5 +1,5 @@
 const create = `
-    CREATE TABLE candidates (
+    CREATE TABLE IF NOT EXISTS candidates (
         id SERIAL primary key,
         office int references offices(id),
         party int references parties(id),

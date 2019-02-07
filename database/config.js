@@ -1,4 +1,6 @@
 
+import 'dotenv/config';
+
 const db = {
   development: {
     user: process.env.PG_USER || 'postgres',
@@ -8,7 +10,7 @@ const db = {
     port: process.env.PG_PORT || 5432,
   },
   heroku: {
-    connectionString: process.env.DATABASE_URI,
+    connectionString: process.env.DATABASE_URL,
     ssl: true,
   },
 };

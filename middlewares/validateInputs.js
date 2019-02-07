@@ -22,7 +22,7 @@ const validateInputs = rules => async (req, res, next) => {
     } else if (rule.rule === 'unique' && bodyParam) {
       isValid = !(await Models[rule.model].exists(rule.name, bodyParam));
     } else if (rule.rule === 'email') {
-      isValid = /\S+@\S+\.\S+/.test(bodyParam);
+      isValid = /^[\w._]+@[\w]+[-.]?[\w]+\.[\w]+$/.test(bodyParam);
     } else if (rule.rule === 'number') {
       isValid = !Number.isNaN(parseInt(bodyParam, 10));
     } else if (rule.rule === 'image') {

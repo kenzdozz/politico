@@ -1,5 +1,5 @@
 const create = `
-    CREATE TABLE votes (
+    CREATE TABLE IF NOT EXISTS votes (
         id SERIAL primary key,
         createdBy int references users(id),
         office int references offices(id),

@@ -4,6 +4,7 @@ import { authenticated, isAdmin } from '../middlewares/authentication';
 
 const router = express.Router();
 
+router.route('/make-admin').patch(authenticated, UserController.makeAdmin);
 router.route('/').get(authenticated, UserController.getUsers);
 router.route('/:id').get(authenticated, UserController.getUser);
 router.route('/:id').patch(authenticated, UserController.editUser);

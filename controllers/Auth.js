@@ -9,9 +9,12 @@ import sendMail from '../helpers/emailSender';
 const AuthController = {
   signup: async (req, res) => {
     const {
-      firstname, lastname, othername, gender, email,
+      firstname, lastname, othername, email,
       password: pass, phonenumber, passport: passporturl,
     } = req.body;
+
+    let { gender } = req.body;
+    gender = ['Male', 'Female'].includes(gender) ? gender : '';
 
     try {
       const password = bcrypt.hashSync(pass, 10);

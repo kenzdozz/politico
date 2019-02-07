@@ -50,7 +50,7 @@ const AuthController = {
       const user = await User.where(['email', '=', email]).first();
 
       if (!user) {
-        return Response.send(res, codes.notFound, {
+        return Response.send(res, codes.badRequest, {
           error: 'User does not exist.',
         });
       }
@@ -64,12 +64,13 @@ const AuthController = {
         <p>Kindly ignore, if you didn't make the request</p><br>
         <p>Politico &copy; ${new Date().getFullYear()}</p>`;
 
-      await sendMail(user.email, 'Reset Password Confirmation', message);
+      const preview = await sendMail(user.email, 'Reset Password Confirmation', message);
       await User.update(user.id, { emailtoken });
       return Response.send(res, codes.success, {
         data: {
           message: 'Check your email for password reset link.',
           email,
+          preview,
         },
       });
     } catch (error) { return Response.handleError(res, error); }
@@ -84,7 +85,7 @@ const AuthController = {
       ]).first();
 
       if (!user) {
-        return Response.send(res, codes.unAuthorized, {
+        return Response.send(res, codes.badRequest, {
           error: 'Invalid email address or token.',
         });
       }

@@ -6,7 +6,7 @@ import 'dotenv/config';
 import codes from './helpers/statusCode';
 import {
   officeRoutes, partyRoutes,
-  authRoutes, userRoutes,
+  authRoutes, candidateRoutes, voteRoutes,
 } from './routes';
 
 const app = express();
@@ -27,8 +27,9 @@ app.get('/', (req, res) => res.status(codes.success).send({
 
 app.use('/api/v1/parties', partyRoutes);
 app.use('/api/v1/offices', officeRoutes);
-app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/office', candidateRoutes);
+app.use('/api/v1/votes', voteRoutes);
 
 app.get('*', (req, res) => res.status(codes.notFound).send({
   status: codes.notFound,

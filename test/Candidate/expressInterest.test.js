@@ -12,16 +12,14 @@ import * as userTable from '../../database/migrations/userTable';
 import * as candidateTable from '../../database/migrations/candidateTable';
 import User from '../../database/models/User';
 import Office from '../../database/models/Office';
-import Candidate from '../../database/models/Candidate';
 
 chai.use(chaiHttp);
 
-const admin = { ...users[3], isadmin: true };
-const newUser = { ...users[2] };
+const newUser = { ...users[2], isadmin: true };
 let token; let user;
 let party; let office;
 
-describe('Admin should register a candidate: POST /office/register/<office-id>', () => {
+describe('User express interest: POST /office/register/<office-id>', () => {
   before(async () => {
     await dbQuery(partyTable.drop);
     await dbQuery(partyTable.create);
@@ -34,28 +32,20 @@ describe('Admin should register a candidate: POST /office/register/<office-id>',
     office = await Office.create(offices[1]);
     party = await Party.create(parties[4]);
     newUser.password = bcrypt.hashSync(newUser.password, 10);
-    admin.password = bcrypt.hashSync(admin.password, 10);
     user = await User.create(newUser);
-    await User.create(admin);
-    await Candidate.create({
-      candidate: user.id,
-      office: office.id,
-      party: party.id,
-      mandate: 'I will water Lagos State',
-    });
     const response = await chai.request(app)
       .post('/api/v1/auth/login').send({
-        email: users[3].email,
-        password: users[3].password,
+        email: users[2].email,
+        password: users[2].password,
       });
     ({ token } = response.body.data);
   });
 
-  it('should successfully approve a candidate', async () => {
-    const response = await chai.request(app).post(`/api/v1/office/${user.id}/register/`)
+  it('should successfully register a candidate', async () => {
+    const response = await chai.request(app).post(`/api/v1/office/register/${office.id}`)
       .set('authorization', token).send({
         party: party.id,
-        office: office.id,
+        mandate: 'I will water Lagos State',
       });
 
     expect(response.status).to.eqls(statusCodes.created);

@@ -5,10 +5,14 @@ import Party from '../database/models/Party';
 
 const PartyController = {
   createParty: async (req, res) => {
-    const { name, hqaddress, logo: logourl } = req.body;
+    const {
+      name, hqaddress, acronym, logo: logourl,
+    } = req.body;
 
     try {
-      const party = await Party.create({ name, hqaddress, logourl });
+      const party = await Party.create({
+        name, hqaddress, acronym, logourl,
+      });
       return Response.send(res, codes.created, {
         data: party,
       });

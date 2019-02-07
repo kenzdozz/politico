@@ -2,33 +2,49 @@ import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../app';
 import statusCodes from '../../helpers/statusCode';
-import { users, offices, candidates } from '../../helpers/mockData';
-import User from '../../database/models/User';
-import Office from '../../database/models/Office';
-import Candidate from '../../database/models/Candidate';
+import { dbQuery } from '../../database';
+import seeder from '../../database/seeder';
+import { createTables, dropTables } from '../../database/migrations';
+import users from '../../database/seeder/users';
 
 chai.use(chaiHttp);
 
-let user; let office; let candidate;
+let token;
 
-describe('User to view results: POST /office/<office-id>/result', () => {
+describe('A user can results of election: POST /api/v1/office/<office-id>/result', () => {
   before(async () => {
-    user = await User.create(users[0]);
-    office = await Office.create(offices[0]);
-    candidate = await Candidate.create(candidates[0]);
+    try {
+      await dbQuery(dropTables);
+      await dbQuery(createTables);
+      await seeder.seedTable('users');
+      await seeder.seedTable('parties');
+      await seeder.seedTable('offices');
+      await seeder.seedTable('candidates');
+      await seeder.seedTable('votes');
+    } catch (err) {
+      // console.log(err);
+    }
+
+    const response = await chai.request(app)
+      .post('/api/v1/auth/login').send({
+        email: users[0].email,
+        password: users[0].password,
+      });
+    ({ token } = response.body.data);
   });
 
   it('should successfully return election results', async () => {
-    const response = await chai.request(app)
-      .post('/api/v1/votes').send({
-        office: office.id,
-        candidate: candidate.id,
-      });
-
+    const response = await chai.request(app).post('/api/v1/office/1/result')
+      .set('authorization', token).send({});
+    console.log(response.body);
     expect(response.status).to.eqls(statusCodes.created);
     expect(response.body.status).to.eqls(statusCodes.created);
-    expect(response.body.data.office).eqls(office.id);
-    expect(response.body.data.candidate).eqls(candidate.id);
-    expect(response.body.data.voter).eqls(user.id);
+    expect(response.body.data.office).eqls(1);
+    // expect(response.body.data.candidate).eqls(candidate.id);
+    // expect(response.body.data.voter).eqls(user.id);
+  });
+
+  after(async () => {
+    // console.log(await dbQuery(dropTables));
   });
 });

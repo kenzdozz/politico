@@ -19,8 +19,13 @@ const down = () => {
 };
 
 const dbQuery = async (query) => {
-  const res = await pool.query(query);
-  return res.rows;
+  try {
+    const res = await pool.query(query);
+    return res.rows;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
 };
 
 export {

@@ -38,7 +38,7 @@ describe('Sign up a user: POST /auth/signup', () => {
     expect(response.body.data.user.lastname).to.eqls(newUser.lastname);
     expect(response.body.data.user.phonenumber).to.eqls(newUser.phonenumber);
     expect(response.body.data.user.id).to.be.a('number');
-  });
+  }).timeout(5000);
 
   it('should fail to create a user without a name', async () => {
     const response = await chai.request(app)

@@ -1,13 +1,14 @@
 const create = `
     CREATE TABLE IF NOT EXISTS petitions (
-        id SERIAL primary key,
-        createdBy int references users(id),
-        office int references offices(id),
-        body varchar (500) NOT NULL,
-        createdOn TIMESTAMP WITH TIME ZONE DEFAULT now()
+        id SERIAL PRIMARY KEY,
+        createdby INT REFERENCES users(id),
+        office INT REFERENCES offices(id),
+        body VARCHAR (1500) NOT NULL,
+        evidence VARCHAR (1500),
+        createdon TIMESTAMP WITH TIME ZONE DEFAULT now()
     );
 `;
 
-const drop = 'DROP TABLE IF EXISTS petitions CASCADE;';
+const drop = 'DROP TABLE IF EXISTS petitions;';
 
 export { create, drop };

@@ -48,12 +48,24 @@ const UserController = {
   },
 
   deleteUser: (req, res) => {
-    User.delete(parseInt(req.params.id, 10));
-    return Response.send(res, codes.success, {
-      data: {
-        message: 'User deleted successfully.',
-      },
-    });
+    try {
+      User.delete(parseInt(req.params.id, 10));
+      return Response.send(res, codes.success, {
+        data: {
+          message: 'User deleted successfully.',
+        },
+      });
+    } catch (error) { return Response.handleError(res, error); }
+  },
+
+  makeAdmin: async (req, res) => {
+    try {
+      const userId = req.body.user;
+      const user = await User.update(userId, { isadmin: true });
+      return Response.send(res, codes.success, {
+        data: user,
+      });
+    } catch (error) { return Response.handleError(res, error); }
   },
 };
 

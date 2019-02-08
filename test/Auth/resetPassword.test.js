@@ -37,8 +37,8 @@ describe('Request password reset: POST /auth/reset', () => {
         email: 'kkk@fff.coi',
       });
 
-    expect(response.status).to.eqls(statusCodes.notFound);
-    expect(response.body.status).to.eqls(statusCodes.notFound);
+    expect(response.status).to.eqls(statusCodes.badRequest);
+    expect(response.body.status).to.eqls(statusCodes.badRequest);
     expect(response.body.error).eqls('User does not exist.');
   });
 
@@ -64,8 +64,8 @@ describe('Request password reset: POST /auth/reset', () => {
         password: 'newpass',
       });
 
-    expect(response.status).to.eqls(statusCodes.unAuthorized);
-    expect(response.body.status).to.eqls(statusCodes.unAuthorized);
+    expect(response.status).to.eqls(statusCodes.badRequest);
+    expect(response.body.status).to.eqls(statusCodes.badRequest);
     expect(response.body.error).eqls('Invalid email address or token.');
   });
 });

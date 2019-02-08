@@ -3,13 +3,13 @@ import codes from '../helpers/statusCode';
 import TokenUtil from '../helpers/TokenUtil';
 
 const authenticated = (req, res, next) => {
-  let token = req.body.token || req.query.token || req.headers.authorization;
+  const token = req.body.token || req.query.token || req.headers.authorization;
   if (!token) {
     return Response.send(res, codes.unAuthorized, {
       error: 'Authorization is required to access this content.',
     });
   }
-  const user = TokenUtil.verify(token);
+  const user = TokenUtil.verify(token.split(' ')[1] || token);
   if (!user) {
     return Response.send(res, codes.unAuthorized, {
       error: 'Provided authorization is invalid or has expired.',

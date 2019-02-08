@@ -19,6 +19,7 @@ const sendMail = async (to, subject, message) => {
   const info = await transporter.sendMail(mailOptions);
   // eslint-disable-next-line no-console
   console.log('Email Preview: ', nodemailer.getTestMessageUrl(info));
+  return nodemailer.getTestMessageUrl(info);
 };
 
 export default sendMail;

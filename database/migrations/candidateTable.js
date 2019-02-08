@@ -1,10 +1,13 @@
 const create = `
     CREATE TABLE IF NOT EXISTS candidates (
-        id SERIAL primary key,
-        office int references offices(id),
-        party int references parties(id),
-        candidate int references users(id),
-        createdAt TIMESTAMP WITH TIME ZONE DEFAULT now()
+        id SERIAL PRIMARY KEY,
+        office INT REFERENCES offices(id),
+        party INT REFERENCES parties(id),
+        candidate INT REFERENCES users(id),
+        approved BOOLEAN DEFAULT FALSE,
+        mandate VARCHAR (1500),
+        createdat TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        UNIQUE (office, candidate)
     );
 `;
 

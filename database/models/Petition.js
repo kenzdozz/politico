@@ -3,7 +3,7 @@ import Model from './Model';
 
 class Petition extends Model {
   constructor() {
-    super('pertitions');
+    super('petitions');
   }
 }
 

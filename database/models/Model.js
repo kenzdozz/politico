@@ -121,7 +121,7 @@ class Model {
   }
 
   async get() {
-    const query = {
+    const query = typeof this.text === 'object' ? this.text : {
       text: this.text,
     };
     this.text = '';

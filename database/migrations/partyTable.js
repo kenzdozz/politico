@@ -1,12 +1,12 @@
 const create = `
     CREATE TABLE IF NOT EXISTS parties (
-        id SERIAL primary key,
-        name varchar (60) NOT NULL,
-        acronym varchar (60),
-        hqAddress varchar (255) NOT NULL,
-        logoUrl varchar (255) NOT NULL,
-        createdAt TIMESTAMP WITH TIME ZONE DEFAULT now(),
-        modifiedAt TIMESTAMP WITH TIME ZONE DEFAULT now()
+        id SERIAL PRIMARY KEY,
+        name VARCHAR (60) NOT NULL,
+        acronym VARCHAR (60),
+        hqaddress VARCHAR (255) NOT NULL,
+        logourl VARCHAR (255) NOT NULL,
+        createdat TIMESTAMP WITH TIME ZONE DEFAULT now(),
+        modifiedat TIMESTAMP WITH TIME ZONE DEFAULT now()
     );
 `;
 

@@ -48,7 +48,7 @@ describe('Create a political party: POST /parties', () => {
     expect(response.body.data.name).to.eqls(newParty1.name);
     expect(response.body.data.hqaddress).to.eqls(newParty1.hqaddress);
     expect(response.body.data.logourl).to.be.a('string');
-  });
+  }).timeout(5000);
 
   it('should fail to create a party with existing name', async () => {
     const response = await chai.request(app)

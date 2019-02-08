@@ -584,7 +584,7 @@ span.modal-close {
     max-width: 300px;
     width: 100%;
     display: block;
-    margin: 0 30px 0 auto;
+    margin: 20px 30px 0 auto;
 }
 .profile .details {
     padding: 15px;

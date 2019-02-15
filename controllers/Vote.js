@@ -7,22 +7,27 @@ import Petition from '../database/models/Petition';
 
 const VoteController = {
   vote: async (req, res) => {
-    const officeId = req.body.office;
-    const candidateId = req.body.candidate;
-    const userId = req.user.id;
+    const officeId = parseInt(req.body.office, 10);
+    const candidateId = parseInt(req.body.candidate, 10);
+    const userId = parseInt(req.user.id, 10);
 
     try {
-      let error = await Candidate.exists(candidateId) ? '' : 'Candidate does not exist. ';
-      error += await Office.exists(officeId) ? '' : 'Office does not exist. ';
-
-      if (error) {
+      if (!await Candidate.where([
+        ['candidate', '=', candidateId], ['office', '=', officeId],
+      ]).exists()) {
         return Response.send(res, codes.badRequest, {
-          error,
+          error: 'Candidate does not exist.',
         });
       }
-
+      if (!await Vote.where([
+        ['createdby', '=', userId], ['office', '=', officeId],
+      ]).exists()) {
+        return Response.send(res, codes.conflict, {
+          error: 'You have already voted for this office..',
+        });
+      }
       const vote = await Vote.create({
-        candidate: req.user.id,
+        candidate: candidateId,
         office: officeId,
         createdby: userId,
       });
@@ -33,7 +38,7 @@ const VoteController = {
   },
 
   officeResults: async (req, res) => {
-    const officeId = req.params.office;
+    const officeId = parseInt(req.params.office, 10);
     try {
       const error = await Office.exists(officeId) ? '' : 'Office does not exist. ';
       if (error) {
@@ -53,7 +58,9 @@ const VoteController = {
   },
 
   petition: async (req, res) => {
-    const { office, body, evidence } = req.body;
+    const { body, evidence } = req.body;
+    const office = parseInt(req.body.office, 10);
+
     try {
       let error = office && await Office.exists(office) ? '' : 'Office does not exist. ';
       if (!body) error = 'Petition body is required';

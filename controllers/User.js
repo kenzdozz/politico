@@ -8,6 +8,7 @@ const UserController = {
     const users = await User.all();
     users.forEach((element) => {
       delete element.password;
+      delete element.emailtoken;
     });
     try {
       return Response.send(res, codes.success, {
@@ -25,6 +26,7 @@ const UserController = {
         });
       }
       delete user.password;
+      delete user.emailtoken;
       return Response.send(res, codes.success, {
         data: user,
       });
@@ -37,10 +39,11 @@ const UserController = {
     } = req.body;
 
     try {
-      const user = await User.update(req.params.id, {
+      const user = await User.update(parseInt(req.params.id, 10), {
         firstname, lastname, othername, gender, email, phoneNumber, passportUrl,
       });
       delete user.password;
+      delete user.emailtoken;
       return Response.send(res, codes.success, {
         data: user,
       });
@@ -60,8 +63,10 @@ const UserController = {
 
   makeAdmin: async (req, res) => {
     try {
-      const userId = req.body.user;
+      const userId = parseInt(req.body.user, 10);
       const user = await User.update(userId, { isadmin: true });
+      delete user.password;
+      delete user.emailtoken;
       return Response.send(res, codes.success, {
         data: user,
       });

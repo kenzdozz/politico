@@ -10,7 +10,7 @@ class Response {
 
   static handleError(res, error = {}) {
     if (error.code === '23505') {
-      const err = error.constraint === 'votes_createdby_office_key' ? 'You have already voted for this office.' : error.detail.replace(/\(|\)|Key /g, '').replace('=', ': ');
+      const err = error.detail.replace(/\(|\)|Key /g, '').replace('=', ': ');
       return Response.send(res, codes.conflict, {
         error: err,
       });

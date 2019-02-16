@@ -73,7 +73,7 @@ class Model {
     let query;
     if (!checkColumn && !checkValue) query = { text: `${this.text}` };
     else {
-      const value = checkValue || Number.isNaN(checkColumn) ? null : checkColumn;
+      const value = checkValue || (Number.isNaN(checkColumn) ? null : checkColumn);
       const column = checkValue ? checkColumn : 'id';
       query = {
         text: `SELECT * FROM ${this.table} WHERE ${column} = $1`,

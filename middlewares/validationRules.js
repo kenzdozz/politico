@@ -48,6 +48,12 @@ const registerRules = [
     message: 'Password is required.',
   },
   {
+    name: 'password',
+    rule: 'minlen',
+    value: 8,
+    message: 'Password length must be up to 8 characters.',
+  },
+  {
     name: 'gender',
     rule: 'required',
     message: 'Gender is required.',

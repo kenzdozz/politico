@@ -5,8 +5,8 @@ import morgan from 'morgan';
 import 'dotenv/config';
 import codes from './helpers/statusCode';
 import {
-  officeRoutes, partyRoutes,
-  authRoutes, userRoutes, candidateRoutes, voteRoutes, petitionRoutes,
+  officeRoutes, partyRoutes, authRoutes, userRoutes,
+  candidateRoutes, voteRoutes, otherRoutes,
 } from './routes';
 
 const app = express();
@@ -29,14 +29,15 @@ app.use('/api/v1/parties', partyRoutes);
 app.use('/api/v1/offices', officeRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/office', candidateRoutes);
 app.use('/api/v1/votes', voteRoutes);
-app.use('/api/v1/petitions', petitionRoutes);
+app.use('/api/v1/candidates', candidateRoutes);
+app.use('/api/v1', otherRoutes);
 
 app.get('*', (req, res) => res.status(codes.notFound).send({
   status: codes.notFound,
   error: 'Page not found.',
 }));
+
 
 app.listen(PORT);
 

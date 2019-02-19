@@ -19,7 +19,7 @@ const VoteController = {
           error: 'Candidate does not exist.',
         });
       }
-      if (!await Vote.where([
+      if (await Vote.where([
         ['createdby', '=', userId], ['office', '=', officeId],
       ]).exists()) {
         return Response.send(res, codes.conflict, {

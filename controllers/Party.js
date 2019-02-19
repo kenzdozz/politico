@@ -43,9 +43,9 @@ const PartyController = {
   },
 
   editParty: async (req, res) => {
-    const { name, hqaddress, logo } = req.body;
+    const { name, hqaddress, logo: logourl } = req.body;
     try {
-      const party = await Party.update(parseInt(req.params.id, 10), { name, hqaddress, logo });
+      const party = await Party.update(parseInt(req.params.id, 10), { name, hqaddress, logourl });
       if (!party) {
         return Response.send(res, codes.notFound, {
           error: 'Party not found.',

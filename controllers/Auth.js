@@ -24,6 +24,7 @@ const AuthController = {
       delete user.password;
       delete user.emailtoken;
       const token = TokenUtil.sign(user);
+      res.set('authorization', token);
       return Response.send(res, codes.created, {
         data: { token, user },
       });
@@ -43,6 +44,7 @@ const AuthController = {
       delete user.password;
       delete user.emailtoken;
       const token = TokenUtil.sign(user);
+      res.set('authorization', token);
       return Response.send(res, codes.success, {
         data: { token, user },
       });
@@ -68,14 +70,12 @@ const AuthController = {
         to reset your password.</p>
         <p>Kindly ignore, if you didn't make the request</p><br>
         <p>Politico &copy; ${new Date().getFullYear()}</p>`;
-
-      const preview = await sendMail(user.email, 'Reset Password Confirmation', message);
+      sendMail(user.email, 'Reset Password Confirmation', message);
       await User.update(user.id, { emailtoken });
       return Response.send(res, codes.success, {
         data: {
           message: 'Check your email for password reset link.',
           email,
-          preview,
         },
       });
     } catch (error) { return Response.handleError(res, error); }

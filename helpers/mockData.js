@@ -82,6 +82,15 @@ const users = [
     gender: 'Feale',
     passporturl: 'jojojdjodwjugfytw',
   },
+  {
+    firstname: 'Jane',
+    lastname: 'Doe',
+    email: 'janers@doe.com',
+    phonenumber: '072031328698',
+    password: 'doejane',
+    gender: 'Feale',
+    passporturl: 'jojojdjodwjugfytw',
+  },
 ];
 
 const candidates = [

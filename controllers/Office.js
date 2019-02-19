@@ -35,6 +35,32 @@ const OfficeController = {
       });
     } catch (error) { return Response.handleError(res, error); }
   },
+
+  editOffice: async (req, res) => {
+    const { name, type } = req.body;
+    try {
+      const office = await Office.update(parseInt(req.params.id, 10), { name, type });
+      if (!office) {
+        return Response.send(res, codes.notFound, {
+          error: 'Office not found.',
+        });
+      }
+      return Response.send(res, codes.success, {
+        data: office,
+      });
+    } catch (error) { return Response.handleError(res, error); }
+  },
+
+  deleteOffice: (req, res) => {
+    try {
+      Office.delete(parseInt(req.params.id, 10));
+      return Response.send(res, codes.success, {
+        data: {
+          message: 'Office deleted successfully.',
+        },
+      });
+    } catch (error) { return Response.handleError(res, error); }
+  },
 };
 
 export default OfficeController;

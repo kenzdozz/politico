@@ -10,6 +10,7 @@ import * as partyTable from '../../database/migrations/partyTable';
 import * as officeTable from '../../database/migrations/officeTable';
 import * as userTable from '../../database/migrations/userTable';
 import * as candidateTable from '../../database/migrations/candidateTable';
+import * as voteTable from '../../database/migrations/voteTable';
 import User from '../../database/models/User';
 import Office from '../../database/models/Office';
 import Candidate from '../../database/models/Candidate';
@@ -18,11 +19,10 @@ chai.use(chaiHttp);
 
 const admin = { ...users[3], isadmin: true };
 const newUser = { ...users[2] };
-const newUser2 = { ...users[4] };
-let token; let user; let user2;
+let token; let user;
 let party; let office;
 
-describe('Admin should register a candidate: POST /office/register/<office-id>', () => {
+describe('Should get candidates: GET /candidates', () => {
   before(async () => {
     await dbQuery(partyTable.drop);
     await dbQuery(partyTable.create);
@@ -32,18 +32,19 @@ describe('Admin should register a candidate: POST /office/register/<office-id>',
     await dbQuery(userTable.create);
     await dbQuery(candidateTable.drop);
     await dbQuery(candidateTable.create);
+    await dbQuery(voteTable.drop);
+    await dbQuery(voteTable.create);
     office = await Office.create(offices[1]);
     party = await Party.create(parties[4]);
     newUser.password = bcrypt.hashSync(newUser.password, 10);
-    newUser2.password = bcrypt.hashSync(newUser2.password, 10);
     admin.password = bcrypt.hashSync(admin.password, 10);
     user = await User.create(newUser);
-    user2 = await User.create(newUser2);
     await User.create(admin);
     await Candidate.create({
       candidate: user.id,
       office: office.id,
       party: party.id,
+      approved: true,
       mandate: 'I will water Lagos State',
     });
     const response = await chai.request(app)
@@ -54,29 +55,39 @@ describe('Admin should register a candidate: POST /office/register/<office-id>',
     ({ token } = response.body.data);
   });
 
-  it('should successfully approve a candidate', async () => {
-    const response = await chai.request(app).post(`/api/v1/office/${user.id}/register/`)
-      .set('authorization', token).send({
-        party: party.id,
-        office: office.id,
-      });
+  it('should get all approved candidate', async () => {
+    const response = await chai.request(app).get('/api/v1/candidates')
+      .set('authorization', token).send();
 
-    expect(response.status).to.eqls(statusCodes.created);
-    expect(response.body.status).to.eqls(statusCodes.created);
-    expect(response.body.data.office).eqls(office.id);
-    expect(response.body.data.candidate).eqls(user.id);
+    expect(response.status).to.eqls(statusCodes.success);
+    expect(response.body.status).to.eqls(statusCodes.success);
+    expect(response.body.data).to.be.an('array');
   });
 
-  it('should successfully create and approve a candidate', async () => {
-    const response = await chai.request(app).post(`/api/v1/office/${user2.id}/register/`)
-      .set('authorization', token).send({
-        party: party.id,
-        office: office.id,
-      });
+  it('should get all candidate', async () => {
+    const response = await chai.request(app).get('/api/v1/candidates/all')
+      .set('authorization', token).send();
 
-    expect(response.status).to.eqls(statusCodes.created);
-    expect(response.body.status).to.eqls(statusCodes.created);
-    expect(response.body.data.office).eqls(office.id);
-    expect(response.body.data.candidate).eqls(user2.id);
+    expect(response.status).to.eqls(statusCodes.success);
+    expect(response.body.status).to.eqls(statusCodes.success);
+    expect(response.body.data).to.be.an('array');
+  });
+
+  it('should get one candidate', async () => {
+    const response = await chai.request(app).get('/api/v1/candidates/1')
+      .set('authorization', token).send();
+
+    expect(response.status).to.eqls(statusCodes.success);
+    expect(response.body.status).to.eqls(statusCodes.success);
+    expect(response.body.data).to.be.an('object');
+  });
+
+  it('should get all candidate for an office', async () => {
+    const response = await chai.request(app).get(`/api/v1/candidates/${office.id}/office`)
+      .set('authorization', token).send();
+
+    expect(response.status).to.eqls(statusCodes.success);
+    expect(response.body.status).to.eqls(statusCodes.success);
+    expect(response.body.data).to.be.an('array');
   });
 });

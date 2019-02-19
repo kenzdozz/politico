@@ -44,6 +44,7 @@ class Model {
   }
 
   async delete(id) {
+    if (Number.isNaN(id)) return null;
     const query = {
       text: `DELETE FROM ${this.table} WHERE id = $1`,
       values: [id],
@@ -71,12 +72,17 @@ class Model {
 
   async exists(checkColumn = false, checkValue = false) {
     let query;
-    if (!checkColumn && !checkValue) query = { text: `${this.text}` };
+    if (!checkColumn && !checkValue) query = { text: `${this.text}`, values: this.values };
     else {
       const value = checkValue || (Number.isNaN(checkColumn) ? null : checkColumn);
-      const column = checkValue ? checkColumn : 'id';
+      let column = checkValue ? checkColumn : 'id';
+      let data = '$1';
+      if (Number.isNaN(parseInt(value, 10))) {
+        data = 'LOWER($1)';
+        column = `LOWER(${column})`;
+      }
       query = {
-        text: `SELECT * FROM ${this.table} WHERE ${column} = $1`,
+        text: `SELECT * FROM ${this.table} WHERE ${column} = ${data}`,
         values: [value],
       };
     }
@@ -95,20 +101,29 @@ class Model {
   where(array) {
     if (!this.text) this.text = `SELECT * FROM ${this.table}`;
     this.text += ' WHERE';
+    this.values = [];
     const conditions = isArray(array[0]) ? array : [array];
-    conditions.forEach((condition) => {
+    let index = 0;
+    for (let i = 0; i < conditions.length; i++) {
+      const condition = conditions[i];
       if (!isArray(condition) || condition.length !== 3) {
         throw new Error('where param must be array containing column operator and value');
       }
-      const column = condition[0];
+      let column = condition[0];
       const opr = condition[1];
       let value = condition[2];
       if (column === 'id') {
         value = Number.isNaN(parseInt(value, 10)) ? null : parseInt(value, 10);
       }
-      this.text += ` ${column} ${opr} '${value}'`;
+      let data = `$${++index}`;
+      if (Number.isNaN(parseInt(value, 10))) {
+        data = `LOWER($${index})`;
+        column = `LOWER(${column})`;
+      }
+      this.text += ` ${column} ${opr} ${data}`;
+      this.values.push(value);
       if (conditions.indexOf(condition) < conditions.length - 1) this.text += ' AND';
-    });
+    }
     return this;
   }
 
@@ -118,8 +133,9 @@ class Model {
   }
 
   async first() {
-    const query = {
+    const query = typeof this.text === 'object' ? this.text : {
       text: `${this.text} ORDER BY id ASC LIMIT 1`,
+      values: this.values,
     };
 
     this.text = '';
@@ -130,6 +146,7 @@ class Model {
   async get() {
     const query = typeof this.text === 'object' ? this.text : {
       text: this.text,
+      values: this.values,
     };
     this.text = '';
     const results = await dbQuery(query);

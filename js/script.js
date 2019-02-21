@@ -1,3 +1,5 @@
+// const baseUrl = 'https://poli-tico.herokuapp.com/api/v1';
+const baseUrl = 'http://localhost:3000/api/v1';
 
 const $ = (selector, all = false) => {
     if (all) return document.querySelectorAll(selector);
@@ -30,13 +32,20 @@ const triggerModal = modalId => {
 const formInputListener = form => {
     for (let element of form.elements) {
         element.oninput = event => {
-            let errorSpan = element.closest('.input-group').querySelector('.form-error')
+            let genErrorSpan = form.querySelector('.form-error.gen-error');
+            let errorSpan = element.closest('.input-group').querySelector('.form-error');
+            if (genErrorSpan) genErrorSpan.innerHTML = '';
             if (errorSpan) errorSpan.innerHTML = '';
         }
+    }
+    const cpass = form.querySelector('input[name=confirm_password]');
+    if (cpass) cpass.oninput = e => {
+        form.querySelector('input[name=password]').closest('.input-group').querySelector('.form-error').innerHTML = '';
     }
 }
 
 const validateInput = (form, rules) => {
+    let valid = true;
     for (let rule of rules) {
         let isValid = false;
         switch (rule.rule) {
@@ -45,16 +54,16 @@ const validateInput = (form, rules) => {
                 if (isValid && form[rule.name].type === 'checkbox') isValid = form[rule.name].checked;
                 break;
             case 'email':
-                isValid = form[rule.name] && /\S+@\S+\.\S+/.test(form[rule.name].value);
+                isValid = form[rule.name] && /^[\w._]+@[\w]+[-.]?[\w]+\.[\w]+$/.test(form[rule.name].value);
                 break;
             case 'confirm':
                 isValid = form[rule.name] && form[rule.value] && form[rule.name].value === form[rule.value].value;
                 break;
-            case 'min':
-                isValid = form[rule.name] && form[rule.name].value >= form[rule.value].value;
+            case 'minlen':
+                isValid = form[rule.name] && form[rule.name].value.length >= rule.value;
                 break;
-            case 'max':
-                isValid = form[rule.name] && form[rule.name].value <= form[rule.value].value;
+            case 'maxlen':
+                isValid = form[rule.name] && form[rule.name].value.length <= rule.value;
                 break;
             case 'number':
                 isValid = form[rule.name] && Number.isNaN(form[rule.name].value);
@@ -72,9 +81,116 @@ const validateInput = (form, rules) => {
                 form[rule.name].closest('.input-group').appendChild(errorSpan);
             }
             errorSpan.innerHTML = rule.message;
+            valid = false;
         }
     }
-    return true
+    return valid
+}
+
+const fetchCall = async (url, method, data, isFormData = false) => {
+    const config = {
+        method,
+        body: isFormData ? data : JSON.stringify(data)
+    };
+    if (!isFormData) {
+        config.headers = {
+            'Content-Type': 'application/json; charset=utf-8',
+        };
+    }
+    try {
+        const resData = await fetch(`${baseUrl}${url}`, config);
+        const response = await resData.json();
+        return response;
+    } catch (error) {
+        console.log(error)
+        return null;
+    }
+}
+
+const handleFieldErrors = (form, response) => {
+    try {
+        if (response.fields) for (const field in response.fields) {
+            const errorSpan = form[field].closest('.input-group').querySelector('.form-error');
+            errorSpan.innerHTML = response.fields[field];
+        }
+        const genError = form.querySelector('.gen-error');
+        if (genError) genError.innerHTML = response.error;
+    } catch (err) {console.log(err)}
+}
+
+const successAlert = (response, wrapper = document) => {
+    const elem = wrapper.querySelector('.alert.success');
+    if (elem) {
+        elem.innerHTML = response.data.message || 'Success!';
+        elem.classList.add('show');
+        elem.scrollIntoView({behavior: "smooth"})
+    }
+}
+
+const getFormData = form => {
+    const formData = new FormData();
+    for (const element of form.elements) {
+        const name = element.getAttribute('name');
+        const elem = form.querySelector(`[name=${name}`);
+        if (elem && elem.value) formData.append(name, elem.value);
+    }
+    return formData;
+}
+
+class Loading {
+    constructor(element, classNames = '') {
+        this.element = element;
+        this.element.classList.add('isloading');
+        this.loader = createElement('span', {
+            class: ['loader'],
+            innerHTML: `
+        <svg class="${classNames}" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <rect x="0" y="10" width="4" height="10" class="svg-rect" fill="#333" opacity="0.2">
+            <animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0s" dur="0.6s" repeatCount="indefinite" />
+            </rect>
+            <rect x="8" y="10" width="4" height="10" class="svg-rect" fill="#333"  opacity="0.2">
+            <animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+            </rect>
+            <rect x="16" y="10" width="4" height="10" class="svg-rect" fill="#333"  opacity="0.2">
+            <animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+            <animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+            </rect>
+        </svg>`
+        });
+        return this;
+    }
+    start() {
+        this.element.appendChild(this.loader);
+        this.element.classList.add('progress');
+    }
+    stop() {
+        this.element.removeChild(this.loader);
+        this.element.classList.remove('progress');
+        this.element.classList.remove('isloading');
+    }
+}
+
+const redirecting = (elem, link) => {
+    elem.innerHTML += ' <small>Redirecting...</small>';
+    new Loading(elem, 'sm dark').start();
+    setTimeout(() => {
+        location.href = link;
+    }, 3000);
+}
+
+const setLogin = response => {
+    const { user, token } = response.data;
+    localStorage.setItem('userToken', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    const url = user.isadmin ? 'admin/index.html' : 'vote.html';
+    successAlert(response);
+    redirecting($('.alert.success'), url);
 }
 
 $('.modal-close', true).forEach(item => {
@@ -103,7 +219,10 @@ $('a[href^="#"]', true).forEach(anchor => {
     anchor.addEventListener('click', (e) => {
         const targetElem = $(anchor.getAttribute('href'));
         if (!targetElem) return;
-        targetElem.scrollIntoView({ behavior: "smooth", block: "center" });
+        targetElem.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
         e.preventDefault();
     })
 })

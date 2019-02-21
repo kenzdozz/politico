@@ -19,6 +19,7 @@
     <main id="main" class="auth-wrapper">
         <div class="auth-container">
             <h1 class="title mt-0">Create Account</h1>
+            <p class="alert success"></p>
             <form id="registerForm" action="">
                 <div class="input-group">
                     <label class="req" for="photo">Passport photo:</label>
@@ -26,7 +27,7 @@
                         <img class="remove" src="./images/remove.png" alt="Remove">
                         <img class="upload" src="./images/upload.webp" alt="Upload Image">
                     </div>
-                    <input class="hidden" type="file" name="photo" id="photo" accept="image/*">
+                    <input class="hidden" type="file" name="passport" id="passport" accept="image/*">
                     <span class="form-error"></span>
                 </div>
                 <div class="input-group">
@@ -46,7 +47,7 @@
                 </div>
                 <div class="input-group">
                     <label class="req" for="phoneNumber">Phone number:</label>
-                    <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="08012345789"
+                    <input type="text" class="form-control" name="phonenumber" id="phonenumber" placeholder="08012345789"
                         required>
                     <span class="form-error"></span>
                 </div>
@@ -83,6 +84,7 @@
                     <span class="form-error"></span>
                 </div>
                 <div class="input-group">
+                    <span class="form-error gen-error"></span>
                     <button class="btn-green" type="submit">Register</button>
                 </div>
                 <p class="text-right mb-0">Already have an account? <a href="./login.html">Login</a></p>

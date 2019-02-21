@@ -329,6 +329,9 @@ tr:nth-child(even) td {
     text-align: right;
     margin: 3px;
 }
+.form-error.gen-error {
+    text-align: left;
+}
 .hidden {
     display: none;
 }
@@ -340,6 +343,7 @@ fieldset {
     border: 1px solid var(--lightGray);
 }
 button {
+    outline: 0;
     cursor: pointer;
     padding: .4rem 1.2rem;
 }
@@ -351,6 +355,10 @@ button:hover {
     text-decoration: none;
     display: inline-block;
     margin: 5px;
+}
+.btn.progress, button.progress {
+    pointer-events: none;
+    cursor: progress;
 }
 .btn-outline {
     border: 1px solid;
@@ -672,4 +680,41 @@ span.modal-close {
     .politician {
         flex-basis: 100%;
     }
+}
+
+.loader {
+    margin-left: 0.5rem;
+}
+.loader svg {
+    vertical-align: middle;
+}
+.loader svg.sm {
+    height: 14px;
+}
+.loader svg .svg-rect {
+    fill: #ffffff;
+}
+.loader svg.dark .svg-rect {
+    fill: #000000;
+}
+.isloading {
+    transition: width 5s linear;
+}
+
+.alert {
+    margin: 3px 0;
+    padding: 10px;
+    display: none;
+    transition: display 3s ease;
+}
+.alert.show {
+    display: block;
+}
+.alert.success {
+    background-color: #cef5c4;
+    border: 1px solid #60cc44;
+}
+.alert small {
+    display: inline-block;
+    margin-left: 10px;
 }

@@ -1,7 +1,6 @@
-
 const registerForm = document.querySelector('form');
 formInputListener(registerForm)
-registerForm.onsubmit = function (event) {
+registerForm.onsubmit = async function (event) {
     const registerRules = [
         {
             name: 'firstname',
@@ -24,9 +23,21 @@ registerForm.onsubmit = function (event) {
             message: 'A valid email address is required.'
         },
         {
-            name: 'phoneNumber',
+            name: 'phonenumber',
             rule: 'required',
-            message: "Voter's ID is required."
+            message: "Phone number is required."
+        },
+        {
+            name: 'phonenumber',
+            rule: 'minlen',
+            value: 10,
+            message: "Phone number length should be between 10 and 15."
+        },
+        {
+            name: 'phonenumber',
+            rule: 'maxlen',
+            value: 15,
+            message: "Phone number length should be between 10 and 15."
         },
         {
             name: 'password',
@@ -38,6 +49,12 @@ registerForm.onsubmit = function (event) {
             rule: 'confirm',
             value: 'confirm_password',
             message: 'Password does not match.'
+        },
+        {
+            name: 'password',
+            rule: 'minlen',
+            value: 8,
+            message: 'Password should be more than 7 characters.'
         },
         {
             name: 'gender',
@@ -55,6 +72,18 @@ registerForm.onsubmit = function (event) {
             message: 'Upload your passport photo.'
         }
     ]
-    validateInput(this, registerRules)
+    const valid = validateInput(this, registerRules);
+    const submitBtn = this.querySelector('button[type=submit]');
+    const loader = new Loading(submitBtn, 'sm');
+    loader.start();
     event.preventDefault();
+    if (!valid) return loader.stop();
+    const formData = getFormData(this);
+    formData.append('passport', document.querySelector('input[type="file"]').files[0]);
+    const response = await fetchCall('/auth/signup', 'POST', formData, true);
+    loader.stop();
+    if (response.status >= 400) {
+        return handleFieldErrors(this, response);
+    }
+    setLogin(response);
 }

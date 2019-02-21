@@ -10,6 +10,7 @@ import * as partyTable from '../../database/migrations/partyTable';
 import * as officeTable from '../../database/migrations/officeTable';
 import * as userTable from '../../database/migrations/userTable';
 import * as candidateTable from '../../database/migrations/candidateTable';
+import * as voteTable from '../../database/migrations/voteTable';
 import User from '../../database/models/User';
 import Office from '../../database/models/Office';
 import Candidate from '../../database/models/Candidate';
@@ -31,6 +32,8 @@ describe('Should get candidates: GET /candidates', () => {
     await dbQuery(userTable.create);
     await dbQuery(candidateTable.drop);
     await dbQuery(candidateTable.create);
+    await dbQuery(voteTable.drop);
+    await dbQuery(voteTable.create);
     office = await Office.create(offices[1]);
     party = await Party.create(parties[4]);
     newUser.password = bcrypt.hashSync(newUser.password, 10);

@@ -47,6 +47,6 @@ describe('Sign up a user: POST /auth/signup', () => {
     expect(response.status).to.eqls(statusCodes.badRequest);
     expect(response.body.status).to.eqls(statusCodes.badRequest);
     expect(response.body.error).eqls('Validation errors.');
-    expect(response.body.fields[0].firstname).eqls('First name is required.');
+    expect(response.body.fields.firstname).eqls('First name is required.');
   });
 });

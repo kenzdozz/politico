@@ -66,6 +66,6 @@ describe('Request password reset: POST /auth/reset', () => {
 
     expect(response.status).to.eqls(statusCodes.badRequest);
     expect(response.body.status).to.eqls(statusCodes.badRequest);
-    expect(response.body.error).eqls('Invalid email address or token.');
+    expect(response.body.error).eqls('Invalid link, kindly re-request for password reset.');
   });
 });

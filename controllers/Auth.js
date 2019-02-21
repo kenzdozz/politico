@@ -64,10 +64,12 @@ const AuthController = {
 
       const emailtoken = Math.random().toString(15).substring(2);
       const message = `<b>Hello ${user.firstname}</b><br>
-        <p>You requested to reset your password.</p>
-        <p>Your password reset token is: ${emailtoken},
-        Make a patch request to '/auth/reset' with the data: email, token and password(new password)
-        to reset your password.</p>
+        <p>You requested to reset your password on Politico.</p>
+        <p>Click on the link below to reset your password</p>
+        <a href="https://poli-tico.herokuapp.com/password-change.html?email=${user.email}&token=${emailtoken}">
+        <button style="background-color:green; color:white; padding: 3px 8px; outline:0">Reset Password</button></a>
+        <p>You can copy and paste to browser.</p>
+        <code>https://poli-tico.herokuapp.com/password-change.html?email=${user.email}&token=${emailtoken}</code>
         <p>Kindly ignore, if you didn't make the request</p><br>
         <p>Politico &copy; ${new Date().getFullYear()}</p>`;
       sendMail(user.email, 'Reset Password Confirmation', message);
@@ -91,7 +93,7 @@ const AuthController = {
 
       if (!user) {
         return Response.send(res, codes.badRequest, {
-          error: 'Invalid email address or token.',
+          error: 'Invalid link, kindly re-request for password reset.',
         });
       }
       const password = bcrypt.hashSync(pass, 10);

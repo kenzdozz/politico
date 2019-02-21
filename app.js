@@ -2,8 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
+import swaggerUi from 'swagger-ui-express';
 import 'dotenv/config';
 import codes from './helpers/statusCode';
+import swaggerDoc from './swagger.json';
 import {
   officeRoutes, partyRoutes, authRoutes, userRoutes,
   candidateRoutes, voteRoutes, otherRoutes,
@@ -32,6 +34,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/votes', voteRoutes);
 app.use('/api/v1/candidates', candidateRoutes);
 app.use('/api/v1', otherRoutes);
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 app.get('*', (req, res) => res.status(codes.notFound).send({
   status: codes.notFound,

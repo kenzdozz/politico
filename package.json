@@ -7,7 +7,7 @@
     "test": "ENV_TEST=true nyc mocha --require babel-register --exit",
     "cover": "nyc --reporter=html --reporter=text mocha --require babel-register --recursive --exit",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "build": "babel ./ -d build --ignore 'node_modules','UI' ",
+    "build": "babel ./ -d build --copy-files --ignore 'node_modules','UI' ",
     "start": "npm run migrate:up && npm run build && node build/app",
     "start:dev": "./node_modules/.bin/babel-watch app.js",
     "migrate:up": "node -e 'require(\"./database\").up()' --require babel-register",

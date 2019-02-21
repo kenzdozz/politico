@@ -51,7 +51,8 @@ describe('Create a political office: POST /offices', () => {
 
     expect(response.status).to.eqls(statusCodes.conflict);
     expect(response.body.status).to.eqls(statusCodes.conflict);
-    expect(response.body.error).eqls('Office already exists.');
+    expect(response.body.error).eqls('Validation errors.');
+    expect(response.body.fields.name).eqls('Office already exists.');
   });
 
   it('should fail to create an office without a name', async () => {
@@ -61,7 +62,7 @@ describe('Create a political office: POST /offices', () => {
     expect(response.status).to.eqls(statusCodes.badRequest);
     expect(response.body.status).to.eqls(statusCodes.badRequest);
     expect(response.body.error).eqls('Validation errors.');
-    expect(response.body.fields[0].name).eqls('Office name is required.');
+    expect(response.body.fields.name).eqls('Office name is required.');
   });
 
   it('should fail to create an office without Authorization', async () => {

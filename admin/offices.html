@@ -7,6 +7,7 @@
     <title>Admin Dashboard - Politico</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="./../css/style.css" />
+    <script src="./../js/auth.js"></script>
 </head>
 
 <body>
@@ -61,11 +62,11 @@
             </div>
             <div class="card">
                 <div class="table-responsive">
-                    <table id="partiesTable" class="table">
+                    <table id="officesTable" class="table">
                         <thead>
                             <tr>
-                                <th>Type</th>
                                 <th>Name</th>
+                                <th>Type</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -78,9 +79,11 @@
         <div id="dialogModal" class="modal">
             <div class="modal-content">
                 <h2 class="modal-title">Continue with action?</h2>
+                <span class="text-red">Warning: This will delete all associated data.</span>
+                <span class="alert error"></span>
                 <div class="input-group">
-                    <button class="btn btn-green" type="button">OK</button>
-                    <button type="button" class="modal-close ml-auto btn btn-red">Cancel</button>
+                    <button class="btn btn-red delete" type="button">Continue</button>
+                    <button type="button" class="modal-close ml-auto btn btn-green">Cancel</button>
                 </div>
             </div>
         </div>

@@ -270,6 +270,9 @@ tr:nth-child(even) td {
 tr#emptyRow td {
     padding: 35px 0;
 }
+#officesTable td:nth-child(2) {
+    text-transform: capitalize;
+}
 
 #registerPage,
 #loginPage {

@@ -68,6 +68,9 @@ const validateInput = (form, rules) => {
             case 'number':
                 isValid = form[rule.name] && Number.isNaN(form[rule.name].value);
                 break;
+            case 'file':
+                isValid = form[rule.name] && form[rule.name].files[0];
+                break;
             default:
                 break;
         }
@@ -87,19 +90,35 @@ const validateInput = (form, rules) => {
     return valid
 }
 
-const fetchCall = async (url, method, data, isFormData = false) => {
+const isAdminPage = () => {
+    return location.href.split('/').includes('admin');
+}
+
+const hanleAuthorization = response => {
+    if (!response.status) return;
+    if (response.status === 401 && !location.href.split('/').includes('login.html')){
+        const url = isAdminPage ? '../login.html' : 'login.html';
+        location.href = url;
+        return;
+    }
+    if (response.status === 403){
+        location.href = 'vote.html';
+    }
+}
+
+const fetchCall = async (url, method = 'GET', data, isFormData = false) => {
     const config = {
         method,
         body: isFormData ? data : JSON.stringify(data)
     };
-    if (!isFormData) {
-        config.headers = {
-            'Content-Type': 'application/json; charset=utf-8',
-        };
+    config.headers = {
+        'authorization': localStorage.getItem('userToken')
     }
+    if (!isFormData) config.headers['Content-Type'] = 'application/json; charset=utf-8';
     try {
         const resData = await fetch(`${baseUrl}${url}`, config);
         const response = await resData.json();
+        hanleAuthorization(response);
         return response;
     } catch (error) {
         console.log(error)
@@ -141,8 +160,10 @@ class Loading {
     constructor(element, classNames = '') {
         this.element = element;
         this.element.classList.add('isloading');
+        const lClass = ['loader'];
+        if (classNames.split(' ').includes('big')) lClass.push('big');
         this.loader = createElement('span', {
-            class: ['loader'],
+            class: lClass,
             innerHTML: `
         <svg class="${classNames}" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
             width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
@@ -193,9 +214,34 @@ const setLogin = response => {
     redirecting($('.alert.success'), url);
 }
 
+const getUser = () => {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+}
+
+const emptyForm = form => {
+    for (const element of form.elements) {
+        element.value = '';
+    }
+    const imageHolder = form.querySelector('.upload-image');
+    const placeholderUrl = isAdminPage ? '../images/upload.webp' : './images/upload.webp';
+    if (imageHolder) {
+        imageHolder.querySelector('img.upload').setAttribute('src', placeholderUrl);
+        imageHolder.classList.remove('uploaded');
+    }
+}
+
 $('.modal-close', true).forEach(item => {
     item.addEventListener('click', () => {
-        $('.modal', true).forEach(modal => modal.classList.remove('show'));
+        $('.modal', true).forEach(modal => {
+            modal.classList.remove('show');
+            const mForm = modal.querySelector('form');
+            if (mForm) {
+                emptyForm(mForm);
+                mForm.querySelectorAll('.form-error').forEach(elem => elem.innerHTML = '');
+                delete mForm.dataset.id;
+            }
+        });
     })
 })
 
@@ -250,8 +296,9 @@ $('input[type=file]', true).forEach(inputFile => {
 $('.upload-image .remove', true).forEach(removeImg => {
     removeImg.onclick = event => {
         const inpGrp = removeImg.closest('.input-group');
+        const placeholderUrl = isAdminPage ? '../images/upload.webp' : './images/upload.webp';
         inpGrp.querySelector('.upload-image').classList.remove('uploaded');
-        inpGrp.querySelector('img.upload').setAttribute('src', './images/upload.webp');
+        inpGrp.querySelector('img.upload').setAttribute('src', placeholderUrl);
         inpGrp.querySelector('input[type=file]').value = null;
     }
 })

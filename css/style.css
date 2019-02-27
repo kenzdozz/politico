@@ -270,6 +270,7 @@ tr:nth-child(even) td {
 tr#emptyRow td {
     padding: 35px 0;
 }
+
 #officesTable td:nth-child(2) {
     text-transform: capitalize;
 }
@@ -486,6 +487,12 @@ button.progress {
 .btn-green {
     background-color: var(--primaryColor);
     border: 1px solid var(--primaryColor);
+    color: #ffffff;
+}
+
+.btn-gold {
+    background-color: #bb8b14;
+    border: 1px solid #bb8b21;
     color: #ffffff;
 }
 

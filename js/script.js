@@ -97,7 +97,7 @@ const isAdminPage = () => {
 const hanleAuthorization = response => {
     if (!response.status) return;
     if (response.status === 401 && !location.href.split('/').includes('login.html')){
-        const url = isAdminPage ? '../login.html' : 'login.html';
+        const url = isAdminPage() ? '../login.html' : 'login.html';
         location.href = url;
         return;
     }
@@ -122,8 +122,19 @@ const fetchCall = async (url, method = 'GET', data, isFormData = false) => {
         return response;
     } catch (error) {
         console.log(error)
-        return null;
+        return {};
     }
+}
+
+const setEmptyRow = (colSpan) => {
+    const table = $('table tbody');
+    const row = document.createElement('tr');
+    row.id = 'emptyRow';
+    const data = document.createElement('td');
+    data.colSpan = colSpan;
+    data.innerHTML = 'No records found.';
+    row.append(data);
+    if(table) table.append(row);
 }
 
 const handleFieldErrors = (form, response) => {
@@ -150,8 +161,8 @@ const getFormData = form => {
     const formData = new FormData();
     for (const element of form.elements) {
         const name = element.getAttribute('name');
-        const elem = form.querySelector(`[name=${name}`);
-        if (elem && elem.value) formData.append(name, elem.value);
+        const elem = form[name];
+        if (elem && elem.value && !formData.has(name)) formData.append(name, elem.value);
     }
     return formData;
 }
@@ -224,7 +235,7 @@ const emptyForm = form => {
         element.value = '';
     }
     const imageHolder = form.querySelector('.upload-image');
-    const placeholderUrl = isAdminPage ? '../images/upload.webp' : './images/upload.webp';
+    const placeholderUrl = isAdminPage() ? '../images/upload.webp' : './images/upload.webp';
     if (imageHolder) {
         imageHolder.querySelector('img.upload').setAttribute('src', placeholderUrl);
         imageHolder.classList.remove('uploaded');
@@ -296,9 +307,16 @@ $('input[type=file]', true).forEach(inputFile => {
 $('.upload-image .remove', true).forEach(removeImg => {
     removeImg.onclick = event => {
         const inpGrp = removeImg.closest('.input-group');
-        const placeholderUrl = isAdminPage ? '../images/upload.webp' : './images/upload.webp';
+        const placeholderUrl = isAdminPage() ? '../images/upload.webp' : './images/upload.webp';
         inpGrp.querySelector('.upload-image').classList.remove('uploaded');
         inpGrp.querySelector('img.upload').setAttribute('src', placeholderUrl);
         inpGrp.querySelector('input[type=file]').value = null;
     }
 })
+
+const logout = $('li.nav-dropdown ul').lastElementChild.querySelector('a');
+if (logout) logout.onclick = async e => {
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('user');
+    await localStorage.clear();
+}

@@ -59,19 +59,19 @@
             <hr>
             <div class="d-flex profile">
                 <div class="col-2">
-                    <img src="../images/user2.jpg" alt="">
+                    <img class="passporturl" src="../images/user.png" alt="">
                 </div>
                 <div class="details col-2">
                     <label>Name</label>
-                    <p>John Doe</p>
+                    <p class="name"></p>
                     <label>Phone number</label>
-                    <p>08097628266</p>
+                    <p class="phonenumber"></p>
                     <label>Email address</label>
-                    <p>john.doe@doe.com</p>
+                    <p class="email"></p>
                     <label>Gender</label>
-                    <p>Male</p>
+                    <p class="gender"></p>
                     <label>Bio</label>
-                    <p></p>
+                    <p class="bio"></p>
                     <div class="mt-5">
                         <button class="toggle-modal btn btn-green" data-modal="updateProfile">Update profile</button>
                         <button class="toggle-modal btn btn-red" data-modal="updatePassword">Update password</button>
@@ -90,10 +90,11 @@
         <div class="modal-content">
             <span class="modal-close">&times;</span>
             <form id="registerForm" action="">
+                <p class="alert success"></p>
                 <h3>Change Password</h3>
                 <div class="input-group">
-                    <label class="req" for="password">Old Password:</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="********"
+                    <label class="req" for="oldpassword">Old Password:</label>
+                    <input type="password" class="form-control" name="oldpassword" id="oldpassword" placeholder="********"
                         required>
                     <span class="form-error"></span>
                 </div>
@@ -146,7 +147,7 @@
                 </div>
                 <div class="input-group">
                     <label class="req" for="phoneNumber">Phone number:</label>
-                    <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="08012345789"
+                    <input type="text" class="form-control" name="phonenumber" id="phoneNumber" placeholder="08012345789"
                         required>
                     <span class="form-error"></span>
                 </div>
@@ -166,6 +167,7 @@
                     <span class="form-error"></span>
                 </div>
                 <div class="input-group">
+                    <span class="form-error gen-error"></span>
                     <button class="btn-green" type="submit">Save</button>
                 </div>
             </form>

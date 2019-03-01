@@ -76,12 +76,11 @@
             <span class="modal-close">&times;</span>
             <form action="">
                 <h2 class="modal-title">Vie for an Office</h2>
+                <p class="alert success"></p>
                 <div class="input-group">
                     <label class="req" for="party">Party:</label>
                     <select class="form-control" name="party" id="party" required>
                         <option value="">Choose one...</option>
-                        <option value="federal">PDP</option>
-                        <option value="legislative">APC</option>
                     </select>
                     <span class="form-error"></span>
                 </div>
@@ -89,8 +88,6 @@
                     <label class="req" for="office">Office:</label>
                     <select class="form-control" name="office" id="office" required>
                         <option value="">Choose one...</option>
-                        <option value="federal">President</option>
-                        <option value="legislative">Governor</option>
                     </select>
                     <span class="form-error"></span>
                 </div>
@@ -100,6 +97,7 @@
                     <span class="form-error"></span>
                 </div>
                 <div class="input-group mb-0">
+                    <span class="gen-error form-error"></span>
                     <button class="btn btn-green" type="submit">Submit</button>
                     <button type="button" class="modal-close ml-auto btn btn-red">Cancel</button>
                 </div>

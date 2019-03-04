@@ -180,6 +180,12 @@ nav ul li{
 .mt-5 {
     margin-top: 1.5rem;
 }
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+.mt-0 {
+    margin-top: 0;
+}
 .table-responsive {
     overflow: auto;
 }
@@ -250,13 +256,12 @@ tr:nth-child(even) td {
     background-color: #ffffff;
     max-width: 580px;
     width: 100%;
-    padding: 0 35px;
+    padding: 2rem 35px;
 }
 .form-control {
     padding: 0.35rem 0.75rem;
     border: 1px solid var(--lightGray);
     border-radius: 5px;
-    text-align: right;
 }
 .form-control:focus {
     outline: 0;
@@ -273,8 +278,15 @@ tr:nth-child(even) td {
     content: " *";
     color: #ff0000;
 }
+#loginPage .input-group label {
+    min-width: 106px;
+}
+#registerPage .input-group label {
+    min-width: 150px;
+}
 .input-group label {
     margin-right: 7px;
+    min-width: 70px;
 }
 .input-group input:not([type='checkbox']), select, textarea {
     flex-grow: 1 !important;
@@ -355,6 +367,11 @@ button:hover {
     color: #000000;
     background-color: #ff0000;
     border: 1px solid #ff0000;
+}
+.btn-light {
+    color: #000000;
+    background-color: #cfd0cb;
+    border: 1px solid #cfd0cb;
 }
 .btn-green {
     background-color: var(--primaryColor);
@@ -440,6 +457,7 @@ span.help {
     right: 0;
     justify-content: center;
     align-items: center;
+    z-index: 2;
     opacity: 0;
 }
 .modal.show .modal-content.shake {
@@ -468,11 +486,12 @@ span.help {
 }
 span.modal-close {
     position: absolute;
-    z-index: 2;
-    right: 25%;
-    top: 30px;
-    background: red;
-    padding: 5px;
+    right: 0;
+    top: 0;
+    background: #333;
+    color: #ffffff;
+    font-size: 22px;
+    padding: 2px 10px;
     cursor: pointer;
 }
 .ml-auto {

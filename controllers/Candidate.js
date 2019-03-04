@@ -87,6 +87,54 @@ const CandidateController = {
       });
     } catch (error) { return Response.handleError(res, error); }
   },
+
+  getCandidates: async (req, res) => {
+    const all = req.url.indexOf('all') !== -1 ? '' : 'WHERE candidates.approved = true';
+    try {
+      const candidates = await Candidate.raw({
+        text: `SELECT candidates.*, users.firstname, users.lastname, users.passporturl, offices.name as officename, parties.logourl, parties.name as partyname, parties.acronym, (SELECT COUNT(votes.id) FROM votes WHERE votes.candidate = candidates.id) as votescount FROM candidates LEFT JOIN users ON candidates.candidate = users.id LEFT JOIN offices ON offices.id = candidates.office LEFT JOIN parties ON parties.id = candidates.party ${all} ORDER BY officename`,
+      }).get();
+      return Response.send(res, codes.success, {
+        data: candidates,
+      });
+    } catch (error) { return Response.handleError(res, error); }
+  },
+
+  getCandidate: async (req, res) => {
+    try {
+      const candidateId = parseInt(req.params.candidate, 10);
+      const candidates = Number.isNaN(candidateId) ? null : await Candidate.raw({
+        text: 'SELECT candidates.*, users.firstname, users.lastname, users.passporturl, offices.name as officename, parties.logourl, parties.name as partyname, parties.acronym, (SELECT COUNT(votes.id) FROM votes WHERE votes.candidate = candidates.id) as votescount FROM candidates LEFT JOIN users ON candidates.candidate = users.id LEFT JOIN offices ON offices.id = candidates.office LEFT JOIN parties ON parties.id = candidates.party WHERE candidates.id = $1',
+        values: [candidateId],
+      }).first();
+      if (!candidates) {
+        return Response.send(res, codes.notFound, {
+          error: 'Candidate not found.',
+        });
+      }
+      return Response.send(res, codes.success, {
+        data: candidates,
+      });
+    } catch (error) { return Response.handleError(res, error); }
+  },
+
+  getOfficeCandidates: async (req, res) => {
+    try {
+      const officeId = parseInt(req.params.office, 10);
+      const candidates = Number.isNaN(officeId) ? null : await Candidate.raw({
+        text: 'SELECT candidates.*, users.firstname, users.lastname, users.passporturl, offices.name as officename, parties.logourl, parties.name as partyname, parties.acronym, (SELECT COUNT(votes.id) FROM votes WHERE votes.candidate = candidates.id) as votescount FROM candidates LEFT JOIN users ON candidates.candidate = users.id LEFT JOIN offices ON offices.id = candidates.office LEFT JOIN parties ON parties.id = candidates.party WHERE offices.id = $1 AND candidates.approved = true',
+        values: [officeId],
+      }).get();
+      if (!candidates) {
+        return Response.send(res, codes.notFound, {
+          error: 'Office not found.',
+        });
+      }
+      return Response.send(res, codes.success, {
+        data: candidates,
+      });
+    } catch (error) { return Response.handleError(res, error); }
+  },
 };
 
 export default CandidateController;

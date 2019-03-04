@@ -3,11 +3,10 @@ import nodemailer from 'nodemailer';
 
 const sendMail = async (to, subject, message) => {
   const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
+    service: 'gmail',
     auth: {
-      user: 'oqmeslufjugyffgd@ethereal.email',
-      pass: 'kjwYFsNjzTWMSYCRmh',
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
     },
   });
   const mailOptions = {
@@ -18,8 +17,7 @@ const sendMail = async (to, subject, message) => {
   };
   const info = await transporter.sendMail(mailOptions);
   // eslint-disable-next-line no-console
-  console.log('Email Preview: ', nodemailer.getTestMessageUrl(info));
-  return nodemailer.getTestMessageUrl(info);
+  console.log('Email info: ', info.response);
 };
 
 export default sendMail;

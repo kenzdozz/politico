@@ -21,6 +21,12 @@ const registerRules = [
     message: 'A valid email address is required.',
   },
   {
+    name: 'email',
+    rule: 'unique',
+    model: 'User',
+    message: 'Email address already exists.',
+  },
+  {
     name: 'phonenumber',
     rule: 'required',
     message: 'Phone number is required.',
@@ -29,6 +35,12 @@ const registerRules = [
     name: 'phonenumber',
     rule: 'number',
     message: 'Phone number must be a number.',
+  },
+  {
+    name: 'phonenumber',
+    rule: 'unique',
+    model: 'User',
+    message: 'Phone number already exists.',
   },
   {
     name: 'phonenumber',

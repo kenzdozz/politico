@@ -56,7 +56,8 @@ describe('Create a political party: POST /parties', () => {
 
     expect(response.status).to.eqls(statusCodes.conflict);
     expect(response.body.status).to.eqls(statusCodes.conflict);
-    expect(response.body.error).eqls('Party already exists.');
+    expect(response.body.error).eqls('Validation errors.');
+    expect(response.body.fields.name).eqls('Party already exists.');
   });
 
   it('should fail to create a party without a name', async () => {
@@ -66,7 +67,7 @@ describe('Create a political party: POST /parties', () => {
     expect(response.status).to.eqls(statusCodes.badRequest);
     expect(response.body.status).to.eqls(statusCodes.badRequest);
     expect(response.body.error).eqls('Validation errors.');
-    expect(response.body.fields[0].name).eqls('Party name is required.');
+    expect(response.body.fields.name).eqls('Party name is required.');
   });
 
   it('should fail to create a party without Authorization', async () => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import Response from '../helpers/Response';
 import codes from '../helpers/statusCode';
 import Office from '../database/models/Office';
@@ -7,15 +8,26 @@ import User from '../database/models/User';
 
 const CandidateController = {
   expressInterest: async (req, res) => {
-    const officeId = req.params.office;
-    const { party: partyId, mandate } = req.body;
-    try {
-      let error = await Party.exists(partyId || 0) ? '' : 'Party does not exist. ';
-      error += await Office.exists(officeId) ? '' : 'Office does not exist. ';
+    const officeId = parseInt(req.params.office, 10);
+    const partyId = parseInt(req.body.party, 10);
+    const { mandate } = req.body;
 
-      if (error) {
+    try {
+      if (!await Party.exists(partyId || 0)) {
         return Response.send(res, codes.badRequest, {
-          error,
+          error: 'Party does not exist.',
+        });
+      }
+      if (!await Office.exists(officeId || 0)) {
+        return Response.send(res, codes.badRequest, {
+          error: 'Office does not exist.',
+        });
+      }
+      if (await Candidate.where([
+        ['candidate', '=', req.user.id], ['office', '=', officeId],
+      ]).exists()) {
+        return Response.send(res, codes.badRequest, {
+          error: 'You have already expressed interest for this office.',
         });
       }
 
@@ -33,16 +45,18 @@ const CandidateController = {
   },
 
   approveCandidate: async (req, res) => {
-    const userId = req.params.user;
-    const officeId = req.body.office;
-    const partyId = req.body.party;
+    const userId = parseInt(req.params.user, 10);
+    const officeId = parseInt(req.body.office, 10);
+    const partyId = parseInt(req.body.party, 10);
     try {
-      let error = await User.exists(userId) ? '' : 'User does not exist. ';
-      error += await Office.exists(officeId) ? '' : 'Office does not exist. ';
-
-      if (error) {
+      if (!await User.exists(userId || 0)) {
         return Response.send(res, codes.badRequest, {
-          error,
+          error: 'User does not exist.',
+        });
+      }
+      if (!await Office.exists(officeId || 0)) {
+        return Response.send(res, codes.badRequest, {
+          error: 'Office does not exist.',
         });
       }
       const isParty = partyId && await Party.exists(partyId);

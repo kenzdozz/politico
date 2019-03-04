@@ -31,9 +31,27 @@ const registerRules = [
     message: 'Phone number must be a number.',
   },
   {
+    name: 'phonenumber',
+    rule: 'minlen',
+    value: 10,
+    message: 'Phone number must be within 10 to 15 characters.',
+  },
+  {
+    name: 'phonenumber',
+    rule: 'maxlen',
+    value: 15,
+    message: 'Phone number must be within 10 to 15 characters.',
+  },
+  {
     name: 'password',
     rule: 'required',
     message: 'Password is required.',
+  },
+  {
+    name: 'password',
+    rule: 'minlen',
+    value: 8,
+    message: 'Password length must be up to 8 characters.',
   },
   {
     name: 'gender',

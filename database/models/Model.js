@@ -54,6 +54,7 @@ class Model {
   }
 
   async find(id) {
+    if (Number.isNaN(id)) return null;
     const query = {
       text: `SELECT * FROM ${this.table} WHERE id = $1`,
       values: [id],
@@ -72,7 +73,7 @@ class Model {
     let query;
     if (!checkColumn && !checkValue) query = { text: `${this.text}` };
     else {
-      const value = checkValue || checkColumn;
+      const value = checkValue || (Number.isNaN(checkColumn) ? null : checkColumn);
       const column = checkValue ? checkColumn : 'id';
       query = {
         text: `SELECT * FROM ${this.table} WHERE ${column} = $1`,
@@ -99,7 +100,13 @@ class Model {
       if (!isArray(condition) || condition.length !== 3) {
         throw new Error('where param must be array containing column operator and value');
       }
-      this.text += ` ${condition[0]} ${condition[1]} '${condition[2]}'`;
+      const column = condition[0];
+      const opr = condition[1];
+      let value = condition[2];
+      if (column === 'id') {
+        value = Number.isNaN(parseInt(value, 10)) ? null : parseInt(value, 10);
+      }
+      this.text += ` ${column} ${opr} '${value}'`;
       if (conditions.indexOf(condition) < conditions.length - 1) this.text += ' AND';
     });
     return this;

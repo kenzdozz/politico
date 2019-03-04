@@ -22,6 +22,7 @@ const AuthController = {
         firstname, lastname, othername, gender, email, password, phonenumber, passporturl,
       });
       delete user.password;
+      delete user.emailtoken;
       const token = TokenUtil.sign(user);
       return Response.send(res, codes.created, {
         data: { token, user },
@@ -40,6 +41,7 @@ const AuthController = {
         });
       }
       delete user.password;
+      delete user.emailtoken;
       const token = TokenUtil.sign(user);
       return Response.send(res, codes.success, {
         data: { token, user },
@@ -93,7 +95,7 @@ const AuthController = {
         });
       }
       const password = bcrypt.hashSync(pass, 10);
-      await User.update(user.id, { password });
+      await User.update(user.id, { password, emailtoken: null });
       return Response.send(res, codes.success, {
         data: {
           message: 'Password changed successfully.',

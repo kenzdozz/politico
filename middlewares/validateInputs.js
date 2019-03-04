@@ -27,6 +27,10 @@ const validateInputs = rules => async (req, res, next) => {
       isValid = !Number.isNaN(parseInt(bodyParam, 10));
     } else if (rule.rule === 'image') {
       isValid = !!bodyParam && bodyParam !== 'invalid';
+    } else if (rule.rule === 'minlen') {
+      isValid = bodyParam.length >= rule.value;
+    } else if (rule.rule === 'maxlen') {
+      isValid = bodyParam.length <= rule.value;
     }
 
     if (!isValid) {

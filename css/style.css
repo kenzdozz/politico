@@ -873,6 +873,7 @@ span.modal-close {
 .loader {
     margin-left: 0.5rem;
 }
+
 .loader.big {
     width: 100%;
     text-align: center;

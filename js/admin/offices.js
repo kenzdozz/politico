@@ -130,6 +130,6 @@ const deleteModal = (office) => {
 $('.toggle-modal', true).forEach(item => {
     item.addEventListener('click', function () {
         triggerModal(this.dataset.modal)
-        $('#' + this.dataset.modal).querySelector('.modal-title').innerHTML = 'Create an Office';
+        $('#' + this.dataset.modal).querySelector('.modal-title').innerHTML = 'Create a Office';
     })
 });

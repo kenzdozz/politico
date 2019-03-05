@@ -44,23 +44,15 @@ const populateOffice = (item, action = '') => {
     table.append(row);
 };
 
-const setEmpty = () => {
-    const table = $('table tbody');
-    const row = document.createElement('tr');
-    row.id = 'emptyRow';
-    const data = document.createElement('td');
-    data.colSpan = 3;
-    data.innerHTML = 'No records found.';
-    row.append(data);
-    table.append(row);
-}
-
 let offices = [];
 window.onload = async e => {
     $('.nav-link .user-icon').setAttribute('src', getUser().passporturl);
+    const loader = new Loading($('.load'), 'dark big');
+    loader.start();
     const response = await fetchCall('/offices');
     offices = response.data;
-    if (!offices.length) setEmpty();
+    if (!offices || !offices.length) setEmptyRow(3);
+    loader.stop();
     offices.forEach(item => {
         populateOffice(item);
     });
@@ -92,8 +84,11 @@ $('#manageOffice form').onsubmit = async function (event) {
         type: this['type'].value,
     });
     loader.stop();
-    if (response.status >= 400) return handleFieldErrors(this, response);
-    offices.unshift(response.data);
+    if (!response.status || response.status >= 400) return handleFieldErrors(this, response);
+    if (isEdit) {
+        const index = offices.indexOf(offices.find(item => item.id = this.dataset.id));
+        offices[index] = response.data;
+    } else offices.unshift(response.data);
     populateOffice(response.data, isEdit ? 'edit' : 'prepend');
     $('#manageOffice .modal-close').click()
 }
@@ -117,9 +112,10 @@ const deleteOffice = async (button, office) => {
     if (response.status >= 400) {
         button.closest('.modal').querySelector('.alert.error').classList.add('show');
         button.closest('.modal').querySelector('.alert.error').innerHTML = response.error;
+        return false;
     }
     offices.pop(office);
-    if (!offices.length) setEmpty();
+    if (!offices.length) setEmptyRow();
     $(`#office-${office.id}`).remove();
     $('#dialogModal .modal-close').click()
 }
@@ -137,6 +133,3 @@ $('.toggle-modal', true).forEach(item => {
         $('#' + this.dataset.modal).querySelector('.modal-title').innerHTML = 'Create a Office';
     })
 });
-
-
-

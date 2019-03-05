@@ -270,6 +270,7 @@ tr:nth-child(even) td {
 tr#emptyRow td {
     padding: 35px 0;
 }
+
 #officesTable td:nth-child(2) {
     text-transform: capitalize;
 }
@@ -489,6 +490,12 @@ button.progress {
     color: #ffffff;
 }
 
+.btn-gold {
+    background-color: #bb8b14;
+    border: 1px solid #bb8b21;
+    color: #ffffff;
+}
+
 .text-right {
     text-align: right;
 }
@@ -645,6 +652,7 @@ span.modal-close {
     position: relative;
     flex-basis: 25%;
     min-width: 200px;
+    margin-bottom: 1.5rem;
 }
 
 .politician .card:hover {
@@ -653,8 +661,12 @@ span.modal-close {
 
 .politician .card {
     border: 1px solid #abc1a5;
-    margin: 1rem;
+    margin: 0 1rem;
+    padding: 0.5rem;
+    height: 100%;
     transition: box-shadow .1s linear;
+    display: flex;
+    flex-direction: column;
 }
 
 .politician .party-logo {
@@ -670,9 +682,9 @@ span.modal-close {
 }
 
 .politician .user-img {
-    width: 100%;
     display: block;
     margin: auto;
+    max-height: 220px;
 }
 
 .politician .details {
@@ -683,6 +695,10 @@ span.modal-close {
 
 .party .details {
     padding-bottom: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
 .politician .details {
@@ -856,6 +872,13 @@ span.modal-close {
 
 .loader {
     margin-left: 0.5rem;
+}
+
+.loader.big {
+    width: 100%;
+    text-align: center;
+    margin: 20px 0;
+    display: block;
 }
 
 .loader svg {

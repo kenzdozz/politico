@@ -61,24 +61,30 @@
                     <table id="candidatesTable" class="table">
                         <thead>
                             <tr>
+                                <th>Photo</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone number</th>
                                 <th>Gender</th>
+                                <th>Reg. Date</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
+                    <div class="load"></div>
                 </div>
             </div>
         </div>
         <div id="dialogModal" class="modal">
             <div class="modal-content">
-                <h2 class="modal-title">Continue with action?</h2>
+                <h4 class="modal-title">Continue with action?</h4>
+                <span class="text-red">Warning: This will delete all associated data.</span>
+                <span class="alert error"></span>
                 <div class="input-group">
-                    <button class="btn btn-green" type="button">OK</button>
-                    <button type="button" class="modal-close ml-auto btn btn-red">Cancel</button>
+                    <button class="btn btn-red delete" type="button">Continue</button>
+                    <button type="button" class="modal-close ml-auto btn btn-green">Cancel</button>
                 </div>
             </div>
         </div>

@@ -52,23 +52,15 @@ const populateParty = (item, action = '') => {
     table.append(row);
 };
 
-const setEmpty = () => {
-    const table = $('table tbody');
-    const row = document.createElement('tr');
-    row.id = 'emptyRow';
-    const data = document.createElement('td');
-    data.colSpan = 5;
-    data.innerHTML = 'No records found.';
-    row.append(data);
-    table.append(row);
-}
-
 let parties = [];
 window.onload = async e => {
     $('.nav-link .user-icon').setAttribute('src', getUser().passporturl);
+    const loader = new Loading($('.load'), 'dark big');
+    loader.start();
     const response = await fetchCall('/parties');
     parties = response.data;
-    if (!parties.length) setEmpty();
+    if (!parties || !parties.length) setEmptyRow(5);
+    loader.stop();
     parties.forEach(item => {
         populateParty(item);
     });
@@ -106,8 +98,11 @@ $('#manageParty form').onsubmit = async function (event) {
     const url = isEdit ? `/parties/${this.dataset.id}` : '/parties';
     const response = await fetchCall(url, isEdit ? 'PATCH' : 'POST', formData, true);
     loader.stop();
-    if (response.status >= 400) return handleFieldErrors(this, response);
-    parties.unshift(response.data);
+    if (!response.status || response.status >= 400) return handleFieldErrors(this, response);
+    if (isEdit) {
+        const index = parties.indexOf(parties.find(item => item.id = this.dataset.id));
+        parties[index] = response.data;
+    } else parties.unshift(response.data);
     populateParty(response.data, isEdit ? 'edit' : 'prepend');
     $('#manageParty .modal-close').click()
 }
@@ -134,9 +129,10 @@ const deleteParty = async (button, party) => {
     if (response.status >= 400) {
         button.closest('.modal').querySelector('.alert.error').classList.add('show');
         button.closest('.modal').querySelector('.alert.error').innerHTML = response.error;
+        return false;
     }
     parties.pop(party);
-    if (!parties.length) setEmpty();
+    if (!parties.length) setEmptyRow();
     $(`#party-${party.id}`).remove();
     $('#dialogModal .modal-close').click()
 }

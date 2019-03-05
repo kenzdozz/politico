@@ -145,7 +145,7 @@ const handleFieldErrors = (form, response) => {
         }
         const genError = form.querySelector('.gen-error');
         if (genError) genError.innerHTML = response.error;
-    } catch (err) {console.log(err)}
+    } catch (err) {/**console.log(err) **/}
 }
 
 const successAlert = (response, wrapper = document) => {
@@ -246,6 +246,8 @@ $('.modal-close', true).forEach(item => {
     item.addEventListener('click', () => {
         $('.modal', true).forEach(modal => {
             modal.classList.remove('show');
+            const mAlert = modal.querySelector('.alert');
+            if (mAlert) mAlert.classList.remove('show');
             const mForm = modal.querySelector('form');
             if (mForm) {
                 emptyForm(mForm);
@@ -319,4 +321,71 @@ if (logout) logout.onclick = async e => {
     localStorage.removeItem('userToken');
     localStorage.removeItem('user');
     await localStorage.clear();
+}
+
+
+$('.nav-link[data-modal=expressInterest]').onclick = async (e) => {
+    const exInterest = $('#expressInterest');
+    if (!exInterest) return false;
+
+    const partySelect = exInterest.querySelector('select[name=party]');
+    const officeSelect = exInterest.querySelector('select[name=office]');
+    
+    if (partySelect.childElementCount == 1) {
+        const partiesRes = await fetchCall('/parties');
+        if (partiesRes && partiesRes.data){
+            const parties = partiesRes.data;
+            parties.forEach(party => {
+                const option = createElement('option', { 
+                    value: party.id,
+                    innerHTML: party.name,
+                });
+                partySelect.append(option);
+            });
+        }
+    }
+    if (officeSelect.childElementCount == 1) {
+        const officesRes = await fetchCall('/offices');
+        if (officesRes && officesRes.data) {
+            const offices = officesRes.data;
+            offices.forEach(office => {
+                const option = createElement('option', { 
+                    value: office.id,
+                    innerHTML: office.name,
+                });
+                officeSelect.append(option);
+            });
+        }
+    }
+}
+
+$('#expressInterest form').onsubmit = async function (e) {
+    e.preventDefault();
+    formInputListener(this);
+    const rules = [
+        {
+            name: 'office',
+            rule: 'required',
+            message: 'Select interested office.'
+        },
+        {
+            name: 'party',
+            rule: 'required',
+            message: 'Select your party.'
+        }
+    ];
+    const loader = new Loading(this.querySelector('button[type=submit]'), 'sm');
+    loader.start();
+    const valid = validateInput(this, rules);
+    if (!valid) return loader.stop();
+    const response = await fetchCall(`/office/register/${this['office'].value}`, 'POST', {
+        party: this['party'].value,
+        mandate: this['mandate'].value
+    });
+    loader.stop();
+    if (!response.status || response.status >= 400) return handleFieldErrors(this, response);
+    successAlert(response, this);
+    setTimeout(() => {
+        this.querySelector('.modal-close').click();
+    }, 1500);
 }

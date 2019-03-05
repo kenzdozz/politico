@@ -905,6 +905,7 @@ span.modal-close {
     margin: 3px 0;
     padding: 10px;
     display: none;
+    font-size: 0.88rem;
     transition: display 3s ease;
 }
 

@@ -449,6 +449,7 @@ button:hover {
     padding: .35rem .85rem;
     text-decoration: none;
     display: inline-block;
+    color: #444444;
     margin: 5px;
 }
 
@@ -493,6 +494,12 @@ button.progress {
 .btn-gold {
     background-color: #bb8b14;
     border: 1px solid #bb8b21;
+    color: #ffffff;
+}
+
+.btn-gray {
+    background-color: gray;
+    border: 1px solid gray;
     color: #ffffff;
 }
 
@@ -671,8 +678,8 @@ span.modal-close {
 
 .politician .party-logo {
     position: absolute;
-    width: 25%;
-    /* height: 80px; */
+    width: 20%;
+    top: 0;
     right: 1rem;
 }
 
@@ -685,6 +692,7 @@ span.modal-close {
     display: block;
     margin: auto;
     max-height: 220px;
+    min-height: 150px;
 }
 
 .politician .details {
@@ -712,10 +720,13 @@ span.modal-close {
     right: 20px;
 }
 
+.politician .details .voted::after {
+    content: "d";
+}
 .politician .details .voted {
-    background-color: #108a0e;
-    color: #ffffff;
+    pointer-events: none;
     cursor: default;
+    color: #ffffff;
 }
 
 .politician .name {
@@ -768,7 +779,6 @@ span.modal-close {
 }
 
 .goto a {
-    color: #444444;
     text-transform: capitalize;
 }
 

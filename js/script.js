@@ -1,5 +1,5 @@
-// const baseUrl = 'https://poli-tico.herokuapp.com/api/v1';
-const baseUrl = 'http://localhost:3000/api/v1';
+const baseUrl = location.host === 'kenzdozz.github.io' ? 
+    'https://poli-tico.herokuapp.com/api/v1' : 'http://localhost:3000/api/v1';
 
 const $ = (selector, all = false) => {
     if (all) return document.querySelectorAll(selector);

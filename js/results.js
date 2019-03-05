@@ -14,7 +14,7 @@ window.onscroll = function () {
 $('.toggle-modal', true).forEach(item => {
     item.addEventListener('click', function () {
         triggerModal(this.dataset.modal);
-    });
+    })
 });
 
 const populateRecord = item => {
@@ -30,18 +30,19 @@ const populateRecord = item => {
     const pName = createElement('p', { class: ['name'] });
     pName.append(`${item.firstname} ${item.lastname}`);
     const office = createElement('p', { class: ['office'] });
-    const aClass = ['btn'];
-    if (typeof voted === 'object'){
-        aClass.push('voted');
-        if (voted.candidate === item.id) aClass.push('btn-green');
-        else aClass.push('btn-gray');
-    }
-    const voteBtn = createElement('a', { href: 'javascript:;', class: aClass, innerHTML: 'Vote' });
-    voteBtn.onclick = voteCandidate(item);
+    const result = createElement('p', {
+        class: ['result'],
+        innerHTML: `<strong ${item === winner ? 'class="winner"':''}>
+            ${item.result}</strong> vote${item.result > 1 ? 's' : ''}`
+    });
     office.append(item.officename);
+    if (item === winner) {
+        const award = createElement('img', { src: './images/winner.png' });
+        pDetails.append(award);
+    }
     pDetails.append(pName);
     pDetails.append(office);
-    pDetails.append(voteBtn);
+    pDetails.append(result);
     pCard.append(partyLogo);
     pCard.append(userImage);
     pCard.append(pDetails);
@@ -55,7 +56,7 @@ const populateRecord = item => {
 
 let candidates = [];
 let offices = [];
-let voted = null;
+let winner = null;
 window.onload = async e => {
     $('.nav-link .user-icon').setAttribute('src', getUser().passporturl);
     const loader = new Loading($('.politicians'), 'dark big');
@@ -87,33 +88,16 @@ const loadCandidates = office => async e => {
     $('.pol-office').innerHTML = office.name;
     const loader = new Loading($('.politicians'), 'dark big');
     loader.start();
-    const response = await fetchCall(`/candidates/${office.id}/office`);
+    const response = await fetchCall(`/office/${office.id}/result`);
     loader.stop();
     candidates = response.data;
-    voted = response.voted;
     if (!candidates || !candidates.length)
         return $('.politicians').innerHTML = '<p class="text-center w-100">No records found.</p>';
+    winner = candidates.reduce(function(a, b) {
+        return a.result > b.result ? a 
+            : (a.result === b.result) ? {} : b;
+    });
     candidates.forEach(item => {
         populateRecord(item);
     });
-}
-
-const voteCandidate = candidate => async e => {
-    const loader = new Loading(e.target, 'sm dark');
-    loader.start();
-    const response = await fetchCall('/votes', 'POST', {
-        office: candidate.office,
-        candidate: candidate.id,
-    });
-    loader.stop();
-    voted = response.data;
-    if (!voted) {
-        triggerModal('dialogModal');
-        $('#dialogModal .text-red').innerHTML = response.error || 'Error occurred, reload page and try again.';
-        return;
-    };
-    $('.politicians .btn', true).forEach(item => {
-        if (item !== e.target) item.classList.add('voted', 'btn-gray');
-    });
-    e.target.classList.add('voted', 'btn-green');
 }

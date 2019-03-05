@@ -28,7 +28,7 @@ const setEmpty = () => {
     const politicians = $('.politicians');
     const data = createElement('p', { class: ['text-center', 'w-100'] });
     data.id = 'emptyRow';
-    data.innerHTML = 'No party found.';
+    data.innerHTML = 'No parties found.';
     politicians.append(data);
 }
 
@@ -39,7 +39,7 @@ window.onload = async e => {
     loader.start();
     const response = await fetchCall('/parties');
     parties = response.data;
-    if (!parties.length) setEmpty();
+    if (!parties || !parties.length) setEmpty();
     loader.stop();
     parties.forEach(item => {
         populateParty(item);
